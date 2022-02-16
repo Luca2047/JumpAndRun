@@ -129,7 +129,9 @@ public class LevelLoader {
                     } else if (object == 96) {
                         objectHandler.addObject(new Mushroom(nr * 32, row * 32, ObjectID.MUSHROOM));
                     } else if (object == 95) {
-                        objectHandler.addObject(new Pig(nr * 32, row * 32, ObjectID.ENEMY));
+                        objectHandler.addObject(new Pig(nr * 32, row * 32, ObjectID.PIG));
+                    } else if (object == 94) {
+                        objectHandler.addObject(new Turtle(nr * 32, row * 32, ObjectID.TURTLE));
                     }
                 }
 

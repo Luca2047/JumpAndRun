@@ -21,7 +21,7 @@ public class Mushroom extends GameObject{
         this.width = 32;
         this.height = 32;
         this.alive = true;
-        showHitbox = true;
+        showHitbox = false;
         loadSprites();
         animationHandler = new AnimationHandler();
         animationHandler.setAnimation(idle);

@@ -25,7 +25,7 @@ public class Bunny extends GameObject{
         this.speedX = 3;
         this.facingRight = false;
         this.alive = true;
-        showHitbox = true;
+        showHitbox = false;
         loadSprites();
         animationHandler = new AnimationHandler();
         animationHandler.setAnimation(runLeft);

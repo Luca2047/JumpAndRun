@@ -106,12 +106,15 @@ public class Game extends Canvas implements Runnable {
             }
             if (keyHandler.num1Pressed) {
                 levelLoader.load("rsc/Level/Level1.txt");
+                CoinHandler.collectedCoins = 0;
             }
             if (keyHandler.num2Pressed) {
                 levelLoader.load("rsc/Level/Level2.txt");
+                CoinHandler.collectedCoins = 0;
             }
             if (keyHandler.num3Pressed) {
                 levelLoader.load("rsc/Level/Level3.txt");
+                CoinHandler.collectedCoins = 0;
             }
         }
         if (keyHandler.escPressed && timer >= 60) {                                        // mit escape kann man pausieren, nur einmal pro Sekunde

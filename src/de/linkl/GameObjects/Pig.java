@@ -1,6 +1,7 @@
 package de.linkl.GameObjects;
 
 import de.linkl.Handler.AnimationHandler;
+import de.linkl.Handler.CoinHandler;
 import de.linkl.State.ObjectID;
 
 import javax.imageio.ImageIO;
@@ -62,6 +63,9 @@ public class Pig extends GameObject {
                 animationHandler.setAnimation(runRight);
             } else {
                 animationHandler.setAnimation(runLeft);
+            }
+            if (raged) {
+                timerForRage++;
             }
 
             animationHandler.tick();
@@ -146,8 +150,9 @@ public class Pig extends GameObject {
                     if (!raged) {
                         raged = true;
                         speedX *= 2;
-                    } else {
+                    } else if (timerForRage >= 60){
                         setAlive(false);
+                        CoinHandler.collectedCoins += 2;
                     }
                 }
             }

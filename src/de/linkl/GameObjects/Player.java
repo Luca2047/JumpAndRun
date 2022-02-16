@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class Player extends GameObject {
 
-    private final float g = 0.6f;                                         // Gravitationskonstante
+    private final float g = 0.7f;                                         // Gravitationskonstante
     private final int maximumFallSpeed = 20;
     private boolean showHitbox = false;
     private int startX;
@@ -169,7 +169,16 @@ public class Player extends GameObject {
             }
 
             if (tempObject.getId() == ObjectID.BEE) {
-                if (getTotalBounds().intersects(tempObject.getTotalBounds())) {
+                if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {
+                    onEnemy = true;
+                    speedY = -8;
+                    if (facingRight) {
+                        animationHandler.setAnimation(spinRight);
+                    } else {
+                        animationHandler.setAnimation(spinLeft);
+                    }
+                    animationHandler.setDelay(60);
+                } else if (getTotalBounds().intersects(tempObject.getTotalBounds()) && !onEnemy) {
                     x = startX;
                 }
             }
@@ -211,15 +220,23 @@ public class Player extends GameObject {
                 }
             }
 
+            if (tempObject.getId() == ObjectID.TURTLE) {
+                if (getTotalBounds().intersects(tempObject.getTotalBounds())) {
+                    x = startX;
+                }
+            }
+
         }
     }
 
     public void input() {                                                           // wandelt die Eingaben des KeyHandlers in Bewegung um
         if (keyHandler.dPressed) {
             speedX = 5;
+            facingRight = true;
         }
         if (keyHandler.aPressed) {
             speedX = -5;
+            facingRight = false;
         }
         if (!(keyHandler.aPressed || keyHandler.dPressed)) {
             speedX = 0;
@@ -264,10 +281,8 @@ public class Player extends GameObject {
                 spinRight[i] = fullImage[4].getSubimage(i*32, 0, 32, 32);
                 spinLeft[i] = fullImage[5].getSubimage(160-i*32, 0, 32, 32);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

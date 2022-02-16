@@ -28,7 +28,7 @@ public class Bee extends GameObject{
         this.height = 34;
         this.speedY = 1;
         this.alive = true;
-
+        this.showHitbox = true;
         this.attacking = false;
         this.startY = this.y;
 
@@ -41,6 +41,11 @@ public class Bee extends GameObject{
     @Override
     public void render(Graphics g) {
         g.drawImage(animationHandler.getImage(), x, y, width, height, null);
+
+        if (showHitbox) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.draw(getTotalBounds());
+        }
     }
 
     @Override
@@ -75,9 +80,9 @@ public class Bee extends GameObject{
                 }
             }
             if (tempObject.getId() == ObjectID.PLAYER) {
-                if ((!(getX() - tempObject.getX()+tempObject.getWidth() >= 60) && !(getX() - tempObject.getX()+tempObject.getWidth() <= 0)) && !attacking) {
+                if ((Math.abs(getX() - tempObject.getX()) <= 20) && !attacking && (tempObject.getY() > getY())) {
                     animationHandler.setAnimation(attack);
-                    speedY = 8;
+                    speedY = 9;
                     attacking = true;
                 }
             }
@@ -86,7 +91,7 @@ public class Bee extends GameObject{
 
     @Override
     public Rectangle getTotalBounds() {
-        return new Rectangle(x,y,width,height-(height/4));
+        return new Rectangle(x+(width/4),y+(height/4),width-(width/2),height-(height/2));
     }
 
     @Override
