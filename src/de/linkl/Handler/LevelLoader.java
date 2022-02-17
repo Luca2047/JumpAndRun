@@ -120,7 +120,34 @@ public class LevelLoader {
                         objectHandler.addObject(new Tile(nr * 32, row * 32, 31, ObjectID.TILE));
                     } else if (object == 32) {
                         objectHandler.addObject(new Tile(nr * 32, row * 32, 32, ObjectID.TILE));
-                    } else if (object == 97) {
+                    } else if (object == 33) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 33, ObjectID.TILE));
+                    } else if (object == 34) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 34, ObjectID.TILE));
+                    } else if (object == 35) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 35, ObjectID.TILE));
+                    } else if (object == 36) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 36, ObjectID.TILE));
+                    } else if (object == 37) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 37, ObjectID.TILE));
+                    } else if (object == 38) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 38, ObjectID.TILE));
+                    } else if (object == 39) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 39, ObjectID.TILE));
+                    } else if (object == 40) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 40, ObjectID.TILE));
+                    } else if (object == 41) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 41, ObjectID.TILE));
+                    } else if (object == 42) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 42, ObjectID.TILE));
+                    } else if (object == 43) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 43, ObjectID.TILE));
+                    } else if (object == 44) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 44, ObjectID.TILE));
+                    }
+
+
+                    else if (object == 97) {
                         objectHandler.addObject(new Bee(nr * 32, row * 32, ObjectID.BEE));
                     } else if (object == 98) {
                         objectHandler.addObject(new Coin(nr * 32, row * 32, ObjectID.COIN));

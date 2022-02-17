@@ -122,6 +122,42 @@ public class Tile extends GameObject {
             case 32:
                 image = fullimage.getSubimage(352, 288, 32, 32);
                 break;
+            case 33:
+                image = fullimage.getSubimage(288, 160, 32, 32);
+                break;
+            case 34:
+                image = fullimage.getSubimage(320, 160, 32, 32);
+                break;
+            case 35:
+                image = fullimage.getSubimage(320, 128, 32, 32);
+                break;
+            case 36:
+                image = fullimage.getSubimage(416, 128, 32, 32);
+                break;
+            case 37:
+                image = fullimage.getSubimage(416, 160, 32, 32);
+                break;
+            case 38:
+                image = fullimage.getSubimage(448, 160, 32, 32);
+                break;
+            case 39:
+                image = fullimage.getSubimage(480, 160, 32, 32);
+                break;
+            case 40:
+                image = fullimage.getSubimage(480, 128, 32, 32);
+                break;
+            case 41:
+                image = fullimage.getSubimage(480, 96, 32, 32);
+                break;
+            case 42:
+                image = fullimage.getSubimage(416, 256, 32, 32);
+                break;
+            case 43:
+                image = fullimage.getSubimage(416, 288, 32, 32);
+                break;
+            case 44:
+                image = fullimage.getSubimage(448, 288, 32, 32);
+                break;
         }
     }
 

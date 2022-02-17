@@ -28,7 +28,7 @@ public class Bee extends GameObject{
         this.height = 34;
         this.speedY = 1;
         this.alive = true;
-        this.showHitbox = true;
+        this.showHitbox = false;
         this.attacking = false;
         this.startY = this.y;
 
