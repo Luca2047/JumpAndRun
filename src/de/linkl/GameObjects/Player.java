@@ -15,7 +15,7 @@ public class Player extends GameObject {
 
     private final float g = 0.7f;                                         // Gravitationskonstante
     private final int maximumFallSpeed = 20;
-    private boolean showHitbox = true;
+    private boolean showHitbox = false;
     private int startX;
 
     private boolean onEnemy;

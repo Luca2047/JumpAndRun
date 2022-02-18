@@ -1,5 +1,7 @@
 package de.linkl.Main;
 
+import de.linkl.Tools.TextBox;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +20,7 @@ public class Window extends JFrame implements ActionListener{
 
     protected JButton start;
     protected JButton exit;
-    protected JLabel title;
+    protected TextBox textBox;
 
     public Window(int width, int height, String title) {
 
@@ -47,14 +49,16 @@ public class Window extends JFrame implements ActionListener{
         this.setLocationRelativeTo(null);
 
         start = new JButton("Start");
-        start.setBounds(590, 200, 100, 50);
+        start.setBounds(540, 200, 200, 50);
         start.addActionListener(this);
         this.add(start);
 
         exit = new JButton("Exit");
-        exit.setBounds(590, 300, 100, 50);
+        exit.setBounds(540, 300, 200, 50);
         exit.addActionListener(this);
         this.add(exit);
+
+        textBox = new TextBox(Game.width/2-220, 100, "java game");
 
     }
 

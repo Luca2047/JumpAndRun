@@ -5,6 +5,7 @@ import de.linkl.Handler.*;
 import de.linkl.State.ObjectID;
 import de.linkl.Tools.Camera;
 import de.linkl.Tools.LevelLoader;
+import de.linkl.Tools.TextBox;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -147,7 +148,7 @@ public class Game extends Canvas implements Runnable {
 
         if (inMenu) {
             g.drawImage(menuBackground, 0, 0, Game.width, Game.height, null);
-            window.start.repaint();
+            window.textBox.render(g);
         }
         else {
             g.fillRect(0,0,width,height);
