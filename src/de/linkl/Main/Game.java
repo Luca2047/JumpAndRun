@@ -3,24 +3,27 @@ package de.linkl.Main;
 import de.linkl.GameObjects.GameObject;
 import de.linkl.Handler.*;
 import de.linkl.State.ObjectID;
+import de.linkl.Tools.Camera;
+import de.linkl.Tools.LevelLoader;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.time.chrono.JapaneseChronology;
 import java.util.Objects;
 
 public class Game extends Canvas implements Runnable {
 
     private boolean running = false;
-    private boolean paused = false;
+    protected static boolean paused = false;
+    protected static boolean inMenu = true;
     private double ticksPerSecond = 60;
     private int timer = 0;
-    public static int width, height;
+    public static int width = 1280, height = 710;
     public static int totalWidth = 2560;
+
+    Window window;
 
     Thread thread;
     ObjectHandler objectHandler;
@@ -29,16 +32,18 @@ public class Game extends Canvas implements Runnable {
     KeyHandler keyHandler;
     LevelLoader levelLoader;
     Camera camera;
-    BufferedImage background;
+    BufferedImage gameBackground;
+    BufferedImage menuBackground;
 
     public void init() {
-        width = this.getWidth();
-        height = this.getHeight();
+
         try {
-            background = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/map/sky.png")));
+            gameBackground = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/map/sky.png")));
+            menuBackground = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/menuBackground.jpg")));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         keyHandler = new KeyHandler();
         objectHandler = new ObjectHandler();
@@ -52,6 +57,10 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
+        window = new Window(1280, 710, "JavaGame");
+        window.add(this);
+        window.setVisible(true);
+
     }
 
     public synchronized void start() {
@@ -63,7 +72,7 @@ public class Game extends Canvas implements Runnable {
     @Override
     public void run() {                                                                             // wird ausgeführt wenn der Thread gestartet wird
         init();                                                                                     // beinhaltet die Game-Loop, dass das Spiel auf einer
-        this.requestFocus();                                                                        // bestimmten Geschwindigkeit läuft (hier: 60 ticks pro Sekunde)
+        this.requestFocusInWindow();                                                                        // bestimmten Geschwindigkeit läuft (hier: 60 ticks pro Sekunde)
 
         long lastTime = System.nanoTime();
         double ns = 1000000000 / ticksPerSecond;
@@ -93,7 +102,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void tick() {                                                    // "updatet" die Informationen bei jedem Tick
-        if (!paused) {
+        if (!paused && !inMenu) {
             objectHandler.tick();
             backgroundHandler.tick();
             coinHandler.tick();
@@ -118,12 +127,12 @@ public class Game extends Canvas implements Runnable {
                 levelLoader.load("rsc/Level/Level3.txt");
                 CoinHandler.collectedCoins = 0;
             }
+            if (keyHandler.escPressed && timer >= 60) {                                        // mit escape kann man pausieren, nur einmal pro Sekunde
+                paused = !paused;
+                timer = 0;
+            }
+            timer++;
         }
-        if (keyHandler.escPressed && timer >= 60) {                                        // mit escape kann man pausieren, nur einmal pro Sekunde
-            paused = !paused;
-            timer = 0;
-        }
-        timer++;
     }
 
     public void render() {                                              // stellt die anzuzeigenden Objects dar
@@ -136,20 +145,25 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         Graphics2D g2d = (Graphics2D) g;
 
-        g.fillRect(0,0,width,height);
-        g.drawImage(background, 0, 0, Game.width, Game.height, null);
+        if (inMenu) {
+            g.drawImage(menuBackground, 0, 0, Game.width, Game.height, null);
+            window.start.repaint();
+        }
+        else {
+            g.fillRect(0,0,width,height);
+            g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
 
-        g2d.translate(-camera.getX(), -camera.getY());
+            g2d.translate(-camera.getX(), -camera.getY());
 
-        backgroundHandler.render(g);
-        objectHandler.render(g);                                        // rendert jedes Objekt aus der Liste des Objecthandlers
-        coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
+            backgroundHandler.render(g);
+            objectHandler.render(g);                                        // rendert jedes Objekt aus der Liste des Objecthandlers
+            coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
 
-        g2d.translate(camera.getX(), camera.getY());
+            g2d.translate(camera.getX(), camera.getY());
 
+        }
         g.dispose();                                                    // dispose() ist eine Methode, die die benötigten Systemressourcen,
         bs.show();                                                      // welche für das Objekt benötigt, freigibt
-
     }
 
 }

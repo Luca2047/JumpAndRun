@@ -1,8 +1,10 @@
-package de.linkl.Handler;
+package de.linkl.Tools;
 
 import de.linkl.GameObjects.*;
 import de.linkl.GameObjects.BackgroundObjects.Cloud;
 import de.linkl.GameObjects.BackgroundObjects.FloatingIsland;
+import de.linkl.Handler.KeyHandler;
+import de.linkl.Handler.ObjectHandler;
 import de.linkl.Main.Game;
 import de.linkl.State.ObjectID;
 

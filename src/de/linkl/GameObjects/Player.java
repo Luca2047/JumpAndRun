@@ -15,7 +15,7 @@ public class Player extends GameObject {
 
     private final float g = 0.7f;                                         // Gravitationskonstante
     private final int maximumFallSpeed = 20;
-    private boolean showHitbox = false;
+    private boolean showHitbox = true;
     private int startX;
 
     private boolean onEnemy;
@@ -113,11 +113,11 @@ public class Player extends GameObject {
     }
 
     public Rectangle getBoundsRight() {
-        return new Rectangle(x + (width - (width / 10)), y + (height / 4), width / 10, height - (height / 2));
+        return new Rectangle(x + width - (width / 6), y + (height / 4), width / 10, height - (height / 2));
     }
 
     public Rectangle getBoundsLeft() {
-        return new Rectangle(x, y + (height / 4), width / 10, height - (height / 2));
+        return new Rectangle(x + (width / 12), y + (height / 4), width / 10, height - (height / 2));
     }
 
     public void collisions(LinkedList<GameObject> objects) {

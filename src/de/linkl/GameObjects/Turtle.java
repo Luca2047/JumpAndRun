@@ -20,8 +20,6 @@ public class Turtle extends GameObject {
 
     BufferedImage[] idle1;
     BufferedImage[] idle2;
-    BufferedImage[] spikesIn;
-    BufferedImage[] spikesOut;
 
     AnimationHandler animationHandler;
 
@@ -95,16 +93,10 @@ public class Turtle extends GameObject {
             fullImage[2] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/turtle/turtle_idle2.png")));
             fullImage[3] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/turtle/turtle_idle1.png")));
 
-            spikesIn = new BufferedImage[8];
-            spikesOut = new BufferedImage[8];
             idle2 = new BufferedImage[14];
             idle1 = new BufferedImage[14];
 
             for (int i = 0; i < 14; i++) {
-                if (i < 8) {
-                    spikesIn[i] = fullImage[0].getSubimage(i * 44, 0, 44, 26);
-                    spikesOut[i] = fullImage[1].getSubimage(i * 44, 0, 44, 26);
-                }
                 idle2[i] = fullImage[2].getSubimage(i * 44, 0, 44, 26);
                 idle1[i] = fullImage[3].getSubimage(i * 44, 0, 44, 26);
             }

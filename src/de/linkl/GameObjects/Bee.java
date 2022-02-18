@@ -80,7 +80,7 @@ public class Bee extends GameObject{
                 }
             }
             if (tempObject.getId() == ObjectID.PLAYER) {
-                if ((Math.abs(getX() - tempObject.getX()) <= 20) && !attacking && (tempObject.getY() > getY())) {
+                if ((Math.abs(getX() - tempObject.getX()) <= 25) && !attacking && (tempObject.getY() > getY())) {
                     animationHandler.setAnimation(attack);
                     speedY = 9;
                     attacking = true;

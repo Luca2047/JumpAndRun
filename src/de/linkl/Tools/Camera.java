@@ -1,4 +1,4 @@
-package de.linkl.Handler;
+package de.linkl.Tools;
 
 import de.linkl.GameObjects.GameObject;
 import de.linkl.Main.Game;
