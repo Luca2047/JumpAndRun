@@ -36,6 +36,7 @@ public class Game extends Canvas implements Runnable {
     Camera camera;
     BufferedImage gameBackground;
     BufferedImage menuBackground;
+    ScrollingBackground scrollingBackground;
 
     public void init() {
 
@@ -45,7 +46,7 @@ public class Game extends Canvas implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        scrollingBackground = new ScrollingBackground("/de/linkl/Graphics/scrollBackground.png");
 
         keyHandler = new KeyHandler();
         objectHandler = new ObjectHandler();
@@ -129,7 +130,7 @@ public class Game extends Canvas implements Runnable {
                 levelLoader.load("rsc/Level/Level3.txt");
                 CoinHandler.collectedCoins = 0;
             }
-            if (keyHandler.escPressed && timer >= 60) {                                        // mit escape kann man pausieren, nur einmal pro Sekunde
+            if (keyHandler.escPressed && timer >= 60) {                                         // mit escape kann man pausieren, nur einmal pro Sekunde
                 paused = !paused;
                 timer = 0;
             }
@@ -137,9 +138,9 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
-    public void render() {                                              // stellt die anzuzeigenden Objects dar
-        BufferStrategy bs = this.getBufferStrategy();                   // BufferStrategy verwaltet was auf dem Bildschirm angezeigt wird
-                                                                        // am Anfang ist diese null, weshalb hier erst eine erstellt wird und dann die Methode nochmal aufruft
+    public void render() {                                                                      // stellt die anzuzeigenden Objects dar
+        BufferStrategy bs = this.getBufferStrategy();                                           // BufferStrategy verwaltet was auf dem Bildschirm angezeigt wird
+                                                                                                // am Anfang ist diese null, weshalb hier erst eine erstellt wird und dann die Methode nochmal aufruft
         if (bs == null) {
             this.createBufferStrategy(3);
             return;
@@ -147,10 +148,11 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         Graphics2D g2d = (Graphics2D) g;
 
-        if (inMenu) {
-            g.drawImage(menuBackground, 0, 0, Game.width, Game.height, null);
-            window.textBox.render(g);
-        }
+        if (inMenu) {                                                                              // zeigt das Menu an
+            //g.drawImage(menuBackground, 0, 0, Game.width, Game.height, null);        //
+            scrollingBackground.render(g);
+            window.textBox.render(g);                                                             //
+        }                                                                                        //
         else {
             g.fillRect(0,0,width,height);
             g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
@@ -158,14 +160,14 @@ public class Game extends Canvas implements Runnable {
             g2d.translate(-camera.getX(), -camera.getY());
 
             backgroundHandler.render(g);
-            objectHandler.render(g);                                        // rendert jedes Objekt aus der Liste des Objecthandlers
+            objectHandler.render(g);                                                            // rendert jedes Objekt aus der Liste des Objecthandlers
             coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
 
             g2d.translate(camera.getX(), camera.getY());
 
         }
-        g.dispose();                                                    // dispose() ist eine Methode, die die benötigten Systemressourcen,
-        bs.show();                                                      // welche für das Objekt benötigt, freigibt
+        g.dispose();                                                                            // dispose() ist eine Methode, die die benötigten Systemressourcen,
+        bs.show();                                                                              // welche für das Objekt benötigt, freigibt
     }
 
 }
