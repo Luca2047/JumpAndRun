@@ -1,6 +1,7 @@
 package de.linkl.Main;
 
 import de.linkl.GameObjects.GameObject;
+import de.linkl.GameObjects.Player;
 import de.linkl.Handler.*;
 import de.linkl.State.ObjectID;
 import de.linkl.Tools.Camera;

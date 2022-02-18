@@ -24,92 +24,92 @@ public class TextBox {
     }
 
     private int[] getLettersAsNumbers() {
-        int[] lettersAsNumber = new int[letters.length];
+        int[] lettersAsNumbers = new int[letters.length];
         for (int i = 0; i< letters.length; i++) {
             switch (letters[i]) {
                 case 'a':
-                    lettersAsNumber[i] = 0;
+                    lettersAsNumbers[i] = 0;
                     break;
                 case 'b':
-                    lettersAsNumber[i] = 1;
+                    lettersAsNumbers[i] = 1;
                     break;
                 case 'c':
-                    lettersAsNumber[i] = 2;
+                    lettersAsNumbers[i] = 2;
                     break;
                 case 'd':
-                    lettersAsNumber[i] = 3;
+                    lettersAsNumbers[i] = 3;
                     break;
                 case 'e':
-                    lettersAsNumber[i] = 4;
+                    lettersAsNumbers[i] = 4;
                     break;
                 case 'f':
-                    lettersAsNumber[i] = 5;
+                    lettersAsNumbers[i] = 5;
                     break;
                 case 'g':
-                    lettersAsNumber[i] = 6;
+                    lettersAsNumbers[i] = 6;
                     break;
                 case 'h':
-                    lettersAsNumber[i] = 7;
+                    lettersAsNumbers[i] = 7;
                     break;
                 case 'i':
-                    lettersAsNumber[i] = 8;
+                    lettersAsNumbers[i] = 8;
                     break;
                 case 'j':
-                    lettersAsNumber[i] = 9;
+                    lettersAsNumbers[i] = 9;
                     break;
                 case 'k':
-                    lettersAsNumber[i] = 10;
+                    lettersAsNumbers[i] = 10;
                     break;
                 case 'l':
-                    lettersAsNumber[i] = 11;
+                    lettersAsNumbers[i] = 11;
                     break;
                 case 'm':
-                    lettersAsNumber[i] = 12;
+                    lettersAsNumbers[i] = 12;
                     break;
                 case 'n':
-                    lettersAsNumber[i] = 13;
+                    lettersAsNumbers[i] = 13;
                     break;
                 case 'o':
-                    lettersAsNumber[i] = 14;
+                    lettersAsNumbers[i] = 14;
                     break;
                 case 'p':
-                    lettersAsNumber[i] = 15;
+                    lettersAsNumbers[i] = 15;
                     break;
                 case 'q':
-                    lettersAsNumber[i] = 16;
+                    lettersAsNumbers[i] = 16;
                     break;
                 case 'r':
-                    lettersAsNumber[i] = 17;
+                    lettersAsNumbers[i] = 17;
                     break;
                 case 's':
-                    lettersAsNumber[i] = 18;
+                    lettersAsNumbers[i] = 18;
                     break;
                 case 't':
-                    lettersAsNumber[i] = 19;
+                    lettersAsNumbers[i] = 19;
                     break;
                 case 'u':
-                    lettersAsNumber[i] = 20;
+                    lettersAsNumbers[i] = 20;
                     break;
                 case 'v':
-                    lettersAsNumber[i] = 21;
+                    lettersAsNumbers[i] = 21;
                     break;
                 case 'w':
-                    lettersAsNumber[i] = 22;
+                    lettersAsNumbers[i] = 22;
                     break;
                 case 'x':
-                    lettersAsNumber[i] = 23;
+                    lettersAsNumbers[i] = 23;
                     break;
                 case 'y':
-                    lettersAsNumber[i] = 24;
+                    lettersAsNumbers[i] = 24;
                     break;
                 case 'z':
-                    lettersAsNumber[i] = 25;
+                    lettersAsNumbers[i] = 25;
                     break;
                 case ' ':
-                    lettersAsNumber[i] = 26;
+                    lettersAsNumbers[i] = 26;
             }
         }
-        return lettersAsNumber;
+        return lettersAsNumbers;
     }
 
     private void loadSprites() {
@@ -132,8 +132,7 @@ public class TextBox {
                 }
 
             }
-
-
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

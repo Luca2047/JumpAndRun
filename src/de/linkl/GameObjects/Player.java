@@ -17,6 +17,7 @@ public class Player extends GameObject {
     private final int maximumFallSpeed = 20;
     private boolean showHitbox = false;
     private int startX;
+    private int shiftCooldown = 360;
 
     private boolean onEnemy;
 
@@ -233,10 +234,18 @@ public class Player extends GameObject {
         if (keyHandler.dPressed) {
             speedX = 5;
             facingRight = true;
+            if (keyHandler.shiftPressed && shiftCooldown >= 360) {
+                x += 150;
+                shiftCooldown = 0;
+            }
         }
         if (keyHandler.aPressed) {
             speedX = -5;
             facingRight = false;
+            if (keyHandler.shiftPressed && shiftCooldown >= 360) {
+                x += -150;
+                shiftCooldown = 0;
+            }
         }
         if (!(keyHandler.aPressed || keyHandler.dPressed)) {
             speedX = 0;
@@ -245,6 +254,7 @@ public class Player extends GameObject {
             jumping = true;
             speedY = -13;
         }
+        shiftCooldown++;
     }
 
     public void loadSprites() {                                                         // lädt alle Bilder für den Player
