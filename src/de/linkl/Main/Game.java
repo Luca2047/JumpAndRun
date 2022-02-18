@@ -1,13 +1,11 @@
 package de.linkl.Main;
 
 import de.linkl.GameObjects.GameObject;
-import de.linkl.GameObjects.Player;
 import de.linkl.Handler.*;
 import de.linkl.State.ObjectID;
 import de.linkl.Tools.Camera;
 import de.linkl.Tools.LevelLoader;
 import de.linkl.Tools.SoundPlayer;
-import de.linkl.Tools.TextBox;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,7 +20,7 @@ public class Game extends Canvas implements Runnable {
     protected static boolean paused = false;
     protected static boolean inMenu = true;
     private double ticksPerSecond = 60;
-    private int timer = 0;
+    private int pauseTimer = 0;
     public static int width = 1280, height = 710;
     public static int totalWidth = 2560;
 
@@ -49,10 +47,6 @@ public class Game extends Canvas implements Runnable {
             e.printStackTrace();
         }
 
-        soundPlayer = new SoundPlayer();
-        soundPlayer.load();
-        soundPlayer.loop(SoundPlayer.music);
-
         scrollingBackground = new ScrollingBackground("/de/linkl/Graphics/scrollBackground.png");
         keyHandler = new KeyHandler();
         objectHandler = new ObjectHandler();
@@ -69,6 +63,9 @@ public class Game extends Canvas implements Runnable {
         window = new Window(1280, 710, "JavaGame");
         window.add(this);
         window.setVisible(true);
+
+        soundPlayer = new SoundPlayer();
+        soundPlayer.load();
 
     }
 
@@ -136,11 +133,11 @@ public class Game extends Canvas implements Runnable {
                 levelLoader.load("rsc/Level/Level3.txt");
                 CoinHandler.collectedCoins = 0;
             }
-            if (keyHandler.escPressed && timer >= 60) {                                         // mit escape kann man pausieren, nur einmal pro Sekunde
+            if (keyHandler.escPressed && pauseTimer >= 60) {                                         // mit escape kann man pausieren, nur einmal pro Sekunde
                 paused = !paused;
-                timer = 0;
+                pauseTimer = 0;
             }
-            timer++;
+            pauseTimer++;
         }
     }
 
@@ -158,8 +155,10 @@ public class Game extends Canvas implements Runnable {
             //g.drawImage(menuBackground, 0, 0, Game.width, Game.height, null);                    //
             scrollingBackground.render(g);
             window.textBox.render(g);
+            soundPlayer.loop(SoundPlayer.menuTheme);
         }
         else {
+            soundPlayer.loop(SoundPlayer.gameTheme);
             g.fillRect(0,0,width,height);
             g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
 

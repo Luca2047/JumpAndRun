@@ -3,12 +3,14 @@ package de.linkl.Tools;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
 import java.io.File;
 
 public class SoundPlayer {
 
-    public static File music;
+    public static File lastFile;
+
+    public static File menuTheme;
+    public static File gameTheme;
     public static File playerJump;
 
     private float volume;
@@ -16,8 +18,9 @@ public class SoundPlayer {
     Clip clip;
 
     public void load() {
-        music = new File("/de/linkl/Sounds/beginning_of_time.wav");
-        this.volume = -50f;
+        menuTheme = new File("src/de/linkl/Sounds/beginningOfTime.wav");
+        gameTheme = new File("src/de/linkl/Sounds/beginningOfTime.wav");
+        this.volume = -30f;
     }
 
     public void play(File file) {
@@ -37,16 +40,27 @@ public class SoundPlayer {
     public void loop(File file) {
         try {
             clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(file));
+            if (file == lastFile) {
 
-            FloatControl controller = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            controller.setValue(volume);
+            } else {
 
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-            clip.start();
+                clip.open(AudioSystem.getAudioInputStream(file));
+
+                FloatControl controller = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                controller.setValue(volume);
+
+                lastFile = file;
+
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+                clip.start();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void stop() {
+        clip.stop();
     }
 
 }
