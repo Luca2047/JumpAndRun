@@ -29,8 +29,8 @@ public class ScrollingBackground {
     }
 
     public void render(Graphics g) {
-        x -= 0.1;
-        x2 -= 0.1;
+        x -= 0.05;
+        x2 -= 0.05;
         if (x+image.getWidth() <= 0) {
             x = image.getWidth();
         }

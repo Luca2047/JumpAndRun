@@ -6,6 +6,7 @@ import de.linkl.Handler.*;
 import de.linkl.State.ObjectID;
 import de.linkl.Tools.Camera;
 import de.linkl.Tools.LevelLoader;
+import de.linkl.Tools.SoundPlayer;
 import de.linkl.Tools.TextBox;
 
 import javax.imageio.ImageIO;
@@ -35,19 +36,24 @@ public class Game extends Canvas implements Runnable {
     LevelLoader levelLoader;
     Camera camera;
     BufferedImage gameBackground;
-    BufferedImage menuBackground;
+    //BufferedImage menuBackground;
     ScrollingBackground scrollingBackground;
+    SoundPlayer soundPlayer;
 
     public void init() {
 
         try {
             gameBackground = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/map/sky.png")));
-            menuBackground = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/menuBackground.jpg")));
+            //menuBackground = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/menuBackground.jpg")));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        scrollingBackground = new ScrollingBackground("/de/linkl/Graphics/scrollBackground.png");
 
+        soundPlayer = new SoundPlayer();
+        soundPlayer.load();
+        soundPlayer.loop(SoundPlayer.music);
+
+        scrollingBackground = new ScrollingBackground("/de/linkl/Graphics/scrollBackground.png");
         keyHandler = new KeyHandler();
         objectHandler = new ObjectHandler();
         backgroundHandler = new ObjectHandler();
@@ -149,10 +155,10 @@ public class Game extends Canvas implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
 
         if (inMenu) {                                                                              // zeigt das Menu an
-            //g.drawImage(menuBackground, 0, 0, Game.width, Game.height, null);        //
+            //g.drawImage(menuBackground, 0, 0, Game.width, Game.height, null);                    //
             scrollingBackground.render(g);
-            window.textBox.render(g);                                                             //
-        }                                                                                        //
+            window.textBox.render(g);
+        }
         else {
             g.fillRect(0,0,width,height);
             g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
