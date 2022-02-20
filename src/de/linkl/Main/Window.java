@@ -61,17 +61,16 @@ public class Window extends JFrame implements MouseListener{
         start.setBounds(540, 200, 200, 50);
         start.addMouseListener(this);
         start.setMargin(new Insets(0, 0, 0, 0));
-        start.setBackground(Color.GRAY);
+        start.setBackground(new Color(181, 181, 181));
         start.setBorder(border3);
         this.add(start);
 
         exit = new JButton("Exit");
-        exit.setVerticalTextPosition(SwingConstants.CENTER);
         exit.setBounds(540, 300, 200, 50);
         exit.addMouseListener(this);
-        start.setMargin(new Insets(0, 0, 0, 0));
-        start.setBackground(Color.GRAY);
-        start.setBorder(border3);
+        exit.setMargin(new Insets(0, 0, 0, 0));
+        exit.setBackground(new Color(181, 181, 181));
+        exit.setBorder(border3);
         this.add(exit);
 
         titleBox = new TextBox(Game.width/2-220, 100, "java game");

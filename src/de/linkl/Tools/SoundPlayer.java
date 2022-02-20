@@ -17,7 +17,7 @@ public class SoundPlayer {
     Clip clip;
 
     public void load() {
-        theme = new File("src/de/linkl/Sounds/gameTheme.wav");
+        theme = new File("src/de/linkl/Sounds/theme.wav");
         this.volume = -30f;
     }
 
