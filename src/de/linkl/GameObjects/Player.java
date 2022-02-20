@@ -3,6 +3,7 @@ package de.linkl.GameObjects;
 import de.linkl.Handler.AnimationHandler;
 import de.linkl.Handler.CoinHandler;
 import de.linkl.Handler.KeyHandler;
+import de.linkl.Main.Game;
 import de.linkl.State.ObjectID;
 
 import javax.imageio.ImageIO;
@@ -17,6 +18,7 @@ public class Player extends GameObject {
     private final int maximumFallSpeed = 20;
     private boolean showHitbox = false;
     private int startX;
+    private int startY;
     private int shiftCooldown = 360;
 
     private boolean onEnemy;
@@ -36,6 +38,7 @@ public class Player extends GameObject {
     public Player(int x, int y, ObjectID id, KeyHandler keyHandler) {
         super(x, y, id);
         this.startX = x;
+        this.startY = y;
         this.id = id;
         this.keyHandler = keyHandler;
         this.animationHandler = new AnimationHandler();
@@ -99,6 +102,11 @@ public class Player extends GameObject {
         input();
         animationHandler.tick();
         collisions(objects);
+
+        if (this.y + this.width >= Game.height) {
+            x = startX;
+            y = startY;
+        }
     }
 
     @Override
@@ -166,6 +174,7 @@ public class Player extends GameObject {
                     CoinHandler.collectedCoins++;
                 } else if (getBoundsTop().intersects(tempObject.getTotalBounds()) || getBoundsRight().intersects(tempObject.getTotalBounds()) || getBoundsLeft().intersects(tempObject.getTotalBounds())) {
                     x = startX;
+                    y = startY;
                 }
             }
 
@@ -181,6 +190,7 @@ public class Player extends GameObject {
                     animationHandler.setDelay(60);
                 } else if (getTotalBounds().intersects(tempObject.getTotalBounds()) && !onEnemy) {
                     x = startX;
+                    y = startY;
                 }
             }
 
@@ -218,12 +228,14 @@ public class Player extends GameObject {
                     animationHandler.setDelay(60);
                 } else if (getBoundsTop().intersects(tempObject.getTotalBounds()) || getBoundsRight().intersects(tempObject.getTotalBounds()) || getBoundsLeft().intersects(tempObject.getTotalBounds())) {
                     x = startX;
+                    y = startY;
                 }
             }
 
             if (tempObject.getId() == ObjectID.TURTLE) {
                 if (getTotalBounds().intersects(tempObject.getTotalBounds())) {
                     x = startX;
+                    y = startY;
                 }
             }
 

@@ -9,8 +9,7 @@ public class SoundPlayer {
 
     public static File lastFile;
 
-    public static File menuTheme;
-    public static File gameTheme;
+    public static File theme;
     public static File playerJump;
 
     private float volume;
@@ -18,8 +17,7 @@ public class SoundPlayer {
     Clip clip;
 
     public void load() {
-        menuTheme = new File("src/de/linkl/Sounds/beginningOfTime.wav");
-        gameTheme = new File("src/de/linkl/Sounds/beginningOfTime.wav");
+        theme = new File("src/de/linkl/Sounds/gameTheme.wav");
         this.volume = -30f;
     }
 

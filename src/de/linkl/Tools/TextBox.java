@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class TextBox {
@@ -13,6 +14,8 @@ public class TextBox {
     private final char[] letters;
     BufferedImage allLetters;
     BufferedImage[] text;
+
+    LinkedList<TextBox> textBoxes = new LinkedList<>();
 
     public TextBox(int x, int y, String text) {
         this.x = x;

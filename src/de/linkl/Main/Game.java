@@ -6,6 +6,7 @@ import de.linkl.State.ObjectID;
 import de.linkl.Tools.Camera;
 import de.linkl.Tools.LevelLoader;
 import de.linkl.Tools.SoundPlayer;
+import de.linkl.Tools.TextBox;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -66,7 +67,7 @@ public class Game extends Canvas implements Runnable {
 
         soundPlayer = new SoundPlayer();
         soundPlayer.load();
-
+        soundPlayer.loop(SoundPlayer.theme);
     }
 
     public synchronized void start() {
@@ -152,13 +153,10 @@ public class Game extends Canvas implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
 
         if (inMenu) {                                                                              // zeigt das Menu an
-            //g.drawImage(menuBackground, 0, 0, Game.width, Game.height, null);                    //
             scrollingBackground.render(g);
-            window.textBox.render(g);
-            soundPlayer.loop(SoundPlayer.menuTheme);
+            window.titleBox.render(g);
         }
         else {
-            soundPlayer.loop(SoundPlayer.gameTheme);
             g.fillRect(0,0,width,height);
             g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
 

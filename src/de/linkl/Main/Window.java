@@ -4,23 +4,28 @@ import de.linkl.Tools.TextBox;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Objects;
 
-public class Window extends JFrame implements ActionListener{
+public class Window extends JFrame implements MouseListener{
 
     Dimension dimension;
     BufferedImage frameIcon;
 
     protected JButton start;
     protected JButton exit;
-    protected TextBox textBox;
+
+    protected TextBox titleBox;
+    protected TextBox startBox;
+    protected TextBox exitBox;
 
     public Window(int width, int height, String title) {
 
@@ -48,31 +53,63 @@ public class Window extends JFrame implements ActionListener{
         this.setMinimumSize(dimension);
         this.setLocationRelativeTo(null);
 
+        Border border = new LineBorder(Color.RED);
+        Border border2 = new BevelBorder(BevelBorder.LOWERED);
+        Border border3 = new EtchedBorder(EtchedBorder.RAISED);
+
         start = new JButton("Start");
         start.setBounds(540, 200, 200, 50);
-        start.addActionListener(this);
+        start.addMouseListener(this);
+        start.setMargin(new Insets(0, 0, 0, 0));
+        start.setBackground(Color.GRAY);
+        start.setBorder(border3);
         this.add(start);
 
         exit = new JButton("Exit");
+        exit.setVerticalTextPosition(SwingConstants.CENTER);
         exit.setBounds(540, 300, 200, 50);
-        exit.addActionListener(this);
+        exit.addMouseListener(this);
+        start.setMargin(new Insets(0, 0, 0, 0));
+        start.setBackground(Color.GRAY);
+        start.setBorder(border3);
         this.add(exit);
 
-        textBox = new TextBox(Game.width/2-220, 100, "java game");
+        titleBox = new TextBox(Game.width/2-220, 100, "java game");
 
     }
 
+
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void mouseClicked(MouseEvent e) {
         if (e.getSource() == start) {
             start.setVisible(false);
             exit.setVisible(false);
-            this.remove(start);
-            this.remove(exit);
             Game.inMenu = false;
         }
         if (e.getSource() == exit) {
             System.exit(0);
         }
     }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+
 }
