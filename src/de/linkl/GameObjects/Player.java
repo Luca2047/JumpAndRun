@@ -225,6 +225,11 @@ public class Player extends GameObject {
 
             if (tempObject.getId() == ObjectID.MUSHROOM) {
                 if(getBoundsBottom().intersects(tempObject.getBoundsTop())) {
+                    if (soundTimer >= 10) {
+                        soundPlayer.volume = -20;
+                        soundPlayer.play(SoundPlayer.spring);
+                        soundTimer = 0;
+                    }
                     speedY = -18;
                     jumping = true;
 
@@ -287,7 +292,7 @@ public class Player extends GameObject {
             }
 
             jumping = true;
-            speedY = -13;
+            speedY = -14;
         }
     }
 

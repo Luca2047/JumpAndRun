@@ -160,7 +160,7 @@ public class Game extends Canvas implements Runnable {
             menuSoundPlayer.loop(SoundPlayer.menuTheme);
         }
         else {                                                                                      // zeigt das Spiel an
-            menuSoundPlayer.volume = 0;
+            menuSoundPlayer.stop();
             gameSoundPlayer.loop(SoundPlayer.theme);
             g.fillRect(0,0,width,height);
             g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);

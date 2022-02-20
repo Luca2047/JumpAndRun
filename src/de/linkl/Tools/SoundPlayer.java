@@ -15,6 +15,7 @@ public class SoundPlayer {
     public static File coin;
     public static File bump;
     public static File playerDown;
+    public static File spring;
 
     public float volume;
 
@@ -27,35 +28,35 @@ public class SoundPlayer {
         coin = new File("src/de/linkl/Sounds/coin.wav");
         bump = new File("src/de/linkl/Sounds/bump.wav");
         playerDown = new File("src/de/linkl/Sounds/playerDown.wav");
+        playerDown = new File("src/de/linkl/Sounds/spring.wav");
 
-        this.volume = -30f;
+        this.volume = -25f;
     }
 
     public void play(File file) {
         try {
-            if (file == lastFile) {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(file));
 
-            } else {
-                clip = AudioSystem.getClip();
-                clip.open(AudioSystem.getAudioInputStream(file));
+            FloatControl controller = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            controller.setValue(volume);
 
-                FloatControl controller = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-                controller.setValue(volume);
+            clip.start();
 
-                clip.start();
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void loop(File file) {
         try {
-            clip = AudioSystem.getClip();
+
             if (file == lastFile) {
 
             } else {
 
+                clip = AudioSystem.getClip();
                 clip.open(AudioSystem.getAudioInputStream(file));
 
                 FloatControl controller = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -66,6 +67,8 @@ public class SoundPlayer {
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
                 clip.start();
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
