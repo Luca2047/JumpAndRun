@@ -6,7 +6,6 @@ import de.linkl.State.ObjectID;
 import de.linkl.Tools.Camera;
 import de.linkl.Tools.LevelLoader;
 import de.linkl.Tools.SoundPlayer;
-import de.linkl.Tools.TextBox;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -35,15 +34,15 @@ public class Game extends Canvas implements Runnable {
     LevelLoader levelLoader;
     Camera camera;
     BufferedImage gameBackground;
-    //BufferedImage menuBackground;
     ScrollingBackground scrollingBackground;
-    SoundPlayer soundPlayer;
+    SoundPlayer gameSoundPlayer;
+    SoundPlayer menuSoundPlayer;
+
 
     public void init() {
 
         try {
             gameBackground = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/map/sky.png")));
-            //menuBackground = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/menuBackground.jpg")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,13 +60,15 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
 
+        menuSoundPlayer = new SoundPlayer();
+        menuSoundPlayer.load();
+
+        gameSoundPlayer = new SoundPlayer();
+        gameSoundPlayer.load();
+
         window = new Window(1280, 710, "JavaGame");
         window.add(this);
         window.setVisible(true);
-
-        soundPlayer = new SoundPlayer();
-        soundPlayer.load();
-        soundPlayer.loop(SoundPlayer.theme);
     }
 
     public synchronized void start() {
@@ -121,6 +122,7 @@ public class Game extends Canvas implements Runnable {
             }
             if (keyHandler.rPressed) {
                 levelLoader.load(levelLoader.loadedlevel);
+                CoinHandler.collectedCoins = 0;
             }
             if (keyHandler.num1Pressed) {
                 levelLoader.load("rsc/Level/Level1.txt");
@@ -155,8 +157,11 @@ public class Game extends Canvas implements Runnable {
         if (inMenu) {                                                                              // zeigt das Menu an
             scrollingBackground.render(g);
             window.titleBox.render(g);
+            menuSoundPlayer.loop(SoundPlayer.menuTheme);
         }
-        else {
+        else {                                                                                      // zeigt das Spiel an
+            menuSoundPlayer.volume = 0;
+            gameSoundPlayer.loop(SoundPlayer.theme);
             g.fillRect(0,0,width,height);
             g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
 

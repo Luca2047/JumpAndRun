@@ -15,8 +15,6 @@ public class TextBox {
     BufferedImage allLetters;
     BufferedImage[] text;
 
-    LinkedList<TextBox> textBoxes = new LinkedList<>();
-
     public TextBox(int x, int y, String text) {
         this.x = x;
         this.y = y;

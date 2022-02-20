@@ -5,6 +5,7 @@ import de.linkl.Handler.CoinHandler;
 import de.linkl.Handler.KeyHandler;
 import de.linkl.Main.Game;
 import de.linkl.State.ObjectID;
+import de.linkl.Tools.SoundPlayer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class Player extends GameObject {
     private boolean showHitbox = false;
     private int startX;
     private int startY;
-    private int shiftCooldown = 360;
+    private int soundTimer = 0;
 
     private boolean onEnemy;
 
@@ -34,6 +35,7 @@ public class Player extends GameObject {
 
     KeyHandler keyHandler;
     AnimationHandler animationHandler;
+    SoundPlayer soundPlayer;
 
     public Player(int x, int y, ObjectID id, KeyHandler keyHandler) {
         super(x, y, id);
@@ -42,8 +44,10 @@ public class Player extends GameObject {
         this.id = id;
         this.keyHandler = keyHandler;
         this.animationHandler = new AnimationHandler();
+        this.soundPlayer = new SoundPlayer();
         this.width = 32;
         this.height = 32;
+        soundPlayer.load();
         loadSprites();
 
         animationHandler.setAnimation(idleRight);
@@ -103,9 +107,11 @@ public class Player extends GameObject {
         animationHandler.tick();
         collisions(objects);
 
-        if (this.y + this.width >= Game.height) {
-            x = startX;
-            y = startY;
+        if (this.y + this.width >= Game.height) {                                   // wenn er aus der Map fällt wird er auf den Startpunkt gesetzt
+            reset();
+        }
+        if (soundTimer <10) {                                                       // damit der sound nicht mehrmals getriggert werden kann
+            soundTimer++;
         }
     }
 
@@ -162,6 +168,12 @@ public class Player extends GameObject {
 
             if (tempObject.getId() == ObjectID.ENEMY) {
                 if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {
+                    if (soundTimer >= 10) {
+                        soundPlayer.volume = -20;
+                        soundPlayer.play(SoundPlayer.bump);
+                        soundTimer = 0;
+                    }
+
                     tempObject.setAlive(false);
                     speedY = -8;
                     onEnemy = true;
@@ -173,13 +185,18 @@ public class Player extends GameObject {
                     animationHandler.setDelay(60);
                     CoinHandler.collectedCoins++;
                 } else if (getBoundsTop().intersects(tempObject.getTotalBounds()) || getBoundsRight().intersects(tempObject.getTotalBounds()) || getBoundsLeft().intersects(tempObject.getTotalBounds())) {
-                    x = startX;
-                    y = startY;
+                    reset();
                 }
             }
 
             if (tempObject.getId() == ObjectID.BEE) {
                 if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {
+                    if (soundTimer >= 10) {
+                        soundPlayer.volume = -20;
+                        soundPlayer.play(SoundPlayer.bump);
+                        soundTimer = 0;
+                    }
+
                     onEnemy = true;
                     speedY = -8;
                     if (facingRight) {
@@ -189,15 +206,19 @@ public class Player extends GameObject {
                     }
                     animationHandler.setDelay(60);
                 } else if (getTotalBounds().intersects(tempObject.getTotalBounds()) && !onEnemy) {
-                    x = startX;
-                    y = startY;
+                    reset();
                 }
             }
 
             if (tempObject.getId() == ObjectID.COIN) {
                 if(getTotalBounds().intersects(tempObject.getTotalBounds())) {
-                    tempObject.setAlive(false);
+                    if (soundTimer >= 10) {
+                        soundPlayer.volume = -30;
+                        soundPlayer.play(SoundPlayer.coin);
+                        soundTimer = 0;
+                    }
 
+                    tempObject.setAlive(false);
                     CoinHandler.collectedCoins++;
                 }
             }
@@ -218,6 +239,12 @@ public class Player extends GameObject {
 
             if (tempObject.getId() == ObjectID.PIG) {
                 if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {
+                    if (soundTimer >= 10) {
+                        soundPlayer.volume = -20;
+                        soundPlayer.play(SoundPlayer.bump);
+                        soundTimer = 0;
+                    }
+
                     speedY = -8;
                     onEnemy = true;
                     if (facingRight) {
@@ -227,15 +254,13 @@ public class Player extends GameObject {
                     }
                     animationHandler.setDelay(60);
                 } else if (getBoundsTop().intersects(tempObject.getTotalBounds()) || getBoundsRight().intersects(tempObject.getTotalBounds()) || getBoundsLeft().intersects(tempObject.getTotalBounds())) {
-                    x = startX;
-                    y = startY;
+                    reset();
                 }
             }
 
             if (tempObject.getId() == ObjectID.TURTLE) {
                 if (getTotalBounds().intersects(tempObject.getTotalBounds())) {
-                    x = startX;
-                    y = startY;
+                    reset();
                 }
             }
 
@@ -246,27 +271,24 @@ public class Player extends GameObject {
         if (keyHandler.dPressed) {
             speedX = 5;
             facingRight = true;
-            if (keyHandler.shiftPressed && shiftCooldown >= 360) {
-                x += 150;
-                shiftCooldown = 0;
-            }
         }
         if (keyHandler.aPressed) {
             speedX = -5;
             facingRight = false;
-            if (keyHandler.shiftPressed && shiftCooldown >= 360) {
-                x += -150;
-                shiftCooldown = 0;
-            }
         }
         if (!(keyHandler.aPressed || keyHandler.dPressed)) {
             speedX = 0;
         }
         if (keyHandler.spacePressed && !jumping) {
+            if (soundTimer >= 10) {
+                soundPlayer.volume = -25;
+                soundPlayer.play(SoundPlayer.playerJump);
+                soundTimer = 0;
+            }
+
             jumping = true;
             speedY = -13;
         }
-        shiftCooldown++;
     }
 
     public void loadSprites() {                                                         // lädt alle Bilder für den Player
@@ -306,5 +328,13 @@ public class Player extends GameObject {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void reset() {
+        soundPlayer.volume = -10;
+        soundPlayer.play(SoundPlayer.playerDown);
+        x = startX;
+        y = startY;
+        facingRight = true;
     }
 }
