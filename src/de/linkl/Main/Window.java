@@ -11,6 +11,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -19,20 +20,23 @@ public class Window extends JFrame implements MouseListener{
 
     Dimension dimension;
     BufferedImage frameIcon;
+    Image play;
+    Image close;
+    Font font;
 
     protected JButton start;
     protected JButton exit;
 
     protected TextBox titleBox;
-    protected TextBox startBox;
-    protected TextBox exitBox;
 
     public Window(int width, int height, String title) {
 
-
+        loadFont();
         dimension = new Dimension(width, height);
         try {
             frameIcon = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/frameIcon.png")));
+            play = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/play.png")));
+            close = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/close.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,24 +61,38 @@ public class Window extends JFrame implements MouseListener{
         Border border2 = new BevelBorder(BevelBorder.LOWERED);
         Border border3 = new EtchedBorder(EtchedBorder.RAISED);
 
-        start = new JButton("Start");
+        start = new JButton("START");
         start.setBounds(540, 200, 200, 50);
         start.addMouseListener(this);
-        start.setMargin(new Insets(0, 0, 0, 0));
         start.setBackground(new Color(181, 181, 181));
         start.setBorder(border3);
+        start.setIcon(new ImageIcon(play));
+        start.setFont(font);
         this.add(start);
 
         exit = new JButton("Exit");
         exit.setBounds(540, 300, 200, 50);
         exit.addMouseListener(this);
-        exit.setMargin(new Insets(0, 0, 0, 0));
         exit.setBackground(new Color(181, 181, 181));
         exit.setBorder(border3);
+        exit.setIcon(new ImageIcon(close));
+        exit.setFont(font);
         this.add(exit);
 
         titleBox = new TextBox(Game.width/2-220, 100, "java game");
 
+    }
+
+    public void loadFont() {
+        try {
+
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("src/de/linkl/Graphics/font.ttf")).deriveFont(20f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/de/linkl/Graphics/font.ttf")));
+
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

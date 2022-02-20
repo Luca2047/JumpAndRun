@@ -28,7 +28,7 @@ public class SoundPlayer {
         coin = new File("src/de/linkl/Sounds/coin.wav");
         bump = new File("src/de/linkl/Sounds/bump.wav");
         playerDown = new File("src/de/linkl/Sounds/playerDown.wav");
-        playerDown = new File("src/de/linkl/Sounds/spring.wav");
+        spring = new File("src/de/linkl/Sounds/spring.wav");
 
         this.volume = -25f;
     }

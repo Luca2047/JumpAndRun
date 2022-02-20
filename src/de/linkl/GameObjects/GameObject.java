@@ -19,7 +19,7 @@ public abstract class GameObject {
     protected boolean showHitbox = false;
 
     protected ObjectID id;
-
+    protected boolean isUpdating = true;
 
     protected boolean falling = true;
     protected boolean jumping = false;
@@ -125,4 +125,5 @@ public abstract class GameObject {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
+
 }

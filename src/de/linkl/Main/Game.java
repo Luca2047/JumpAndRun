@@ -29,6 +29,7 @@ public class Game extends Canvas implements Runnable {
     Thread thread;
     ObjectHandler objectHandler;
     ObjectHandler backgroundHandler;
+    ObjectHandler foregroundHandler;
     CoinHandler coinHandler;
     KeyHandler keyHandler;
     LevelLoader levelLoader;
@@ -111,6 +112,7 @@ public class Game extends Canvas implements Runnable {
 
     public void tick() {                                                    // "updatet" die Informationen bei jedem Tick
         if (!paused && !inMenu) {
+            foregroundHandler.tick();
             objectHandler.tick();
             backgroundHandler.tick();
             coinHandler.tick();
@@ -168,6 +170,7 @@ public class Game extends Canvas implements Runnable {
             g2d.translate(-camera.getX(), -camera.getY());
 
             backgroundHandler.render(g);
+            foregroundHandler.render(g);
             objectHandler.render(g);                                                            // rendert jedes Objekt aus der Liste des Objecthandlers
             coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
 
