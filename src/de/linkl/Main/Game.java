@@ -29,7 +29,6 @@ public class Game extends Canvas implements Runnable {
     Thread thread;
     ObjectHandler objectHandler;
     ObjectHandler backgroundHandler;
-    ObjectHandler foregroundHandler;
     CoinHandler coinHandler;
     KeyHandler keyHandler;
     LevelLoader levelLoader;
@@ -40,7 +39,7 @@ public class Game extends Canvas implements Runnable {
     SoundPlayer menuSoundPlayer;
 
 
-    public void init() {
+    public void init() {                                                                        //in der init Methode werden alle Objekte erstellt und zugewiesen; wird beim Start durch die run Methode aufgerufen
 
         try {
             gameBackground = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/map/sky.png")));
@@ -81,7 +80,7 @@ public class Game extends Canvas implements Runnable {
     @Override
     public void run() {                                                                             // wird ausgeführt wenn der Thread gestartet wird
         init();                                                                                     // beinhaltet die Game-Loop, dass das Spiel auf einer
-        this.requestFocusInWindow();                                                                        // bestimmten Geschwindigkeit läuft (hier: 60 ticks pro Sekunde)
+        this.requestFocusInWindow();                                                                // bestimmten Geschwindigkeit läuft (hier: 60 ticks pro Sekunde)
 
         long lastTime = System.nanoTime();
         double ns = 1000000000 / ticksPerSecond;
@@ -112,7 +111,6 @@ public class Game extends Canvas implements Runnable {
 
     public void tick() {                                                    // "updatet" die Informationen bei jedem Tick
         if (!paused && !inMenu) {
-            foregroundHandler.tick();
             objectHandler.tick();
             backgroundHandler.tick();
             coinHandler.tick();
@@ -122,20 +120,9 @@ public class Game extends Canvas implements Runnable {
                     camera.tick(gameObject);
                 }
             }
-            if (keyHandler.rPressed) {
+            if (keyHandler.rPressed) {                                      // mit "R" lässt sich das Level neu starten
+                gameSoundPlayer.stop();
                 levelLoader.load(levelLoader.loadedlevel);
-                CoinHandler.collectedCoins = 0;
-            }
-            if (keyHandler.num1Pressed) {
-                levelLoader.load("rsc/Level/Level1.txt");
-                CoinHandler.collectedCoins = 0;
-            }
-            if (keyHandler.num2Pressed) {
-                levelLoader.load("rsc/Level/Level2.txt");
-                CoinHandler.collectedCoins = 0;
-            }
-            if (keyHandler.num3Pressed) {
-                levelLoader.load("rsc/Level/Level3.txt");
                 CoinHandler.collectedCoins = 0;
             }
             if (keyHandler.escPressed && pauseTimer >= 60) {                                         // mit escape kann man pausieren, nur einmal pro Sekunde
@@ -146,7 +133,7 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
-    public void render() {                                                                      // stellt die anzuzeigenden Objects dar
+    public void render() {                                                                      // stellt die anzuzeigenden Objekte dar
         BufferStrategy bs = this.getBufferStrategy();                                           // BufferStrategy verwaltet was auf dem Bildschirm angezeigt wird
                                                                                                 // am Anfang ist diese null, weshalb hier erst eine erstellt wird und dann die Methode nochmal aufruft
         if (bs == null) {
@@ -170,7 +157,6 @@ public class Game extends Canvas implements Runnable {
             g2d.translate(-camera.getX(), -camera.getY());
 
             backgroundHandler.render(g);
-            foregroundHandler.render(g);
             objectHandler.render(g);                                                            // rendert jedes Objekt aus der Liste des Objecthandlers
             coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
 

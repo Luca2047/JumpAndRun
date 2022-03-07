@@ -24,7 +24,7 @@ public class LevelLoader {
     ObjectHandler backgroundHandler;
     KeyHandler keyHandler;
 
-    public LevelLoader(ObjectHandler objectHandler,  ObjectHandler backgroundHandler,KeyHandler keyHandler) {
+    public LevelLoader(ObjectHandler objectHandler, ObjectHandler backgroundHandler, KeyHandler keyHandler) {
         this.keyHandler = keyHandler;
         this.objectHandler = objectHandler;
         this.backgroundHandler = backgroundHandler;

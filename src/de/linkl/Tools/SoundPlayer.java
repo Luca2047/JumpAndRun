@@ -21,7 +21,7 @@ public class SoundPlayer {
 
     Clip clip;
 
-    public void load() {
+    public void load() {                                                                                            // lädt alle Sounds die benötigt werden
         theme = new File("src/de/linkl/Sounds/theme.wav");
         menuTheme = new File("src/de/linkl/Sounds/menuTheme.wav");
         playerJump = new File("src/de/linkl/Sounds/playerJump.wav");
@@ -49,11 +49,11 @@ public class SoundPlayer {
 
     }
 
-    public void loop(File file) {
+    public void loop(File file) {                                                                                   // wie play bloß, dass der Sound geloopt wird
         try {
 
-            if (file == lastFile) {
-
+            if (file == lastFile) {                                                                                 // falls die Methode in einer Schleife aufgerufen wird (oft der Fall),
+                                                                                                                    // wird der Sound nicht immer wieder gestartet
             } else {
 
                 clip = AudioSystem.getClip();

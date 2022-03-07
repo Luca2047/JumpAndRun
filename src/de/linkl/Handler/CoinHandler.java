@@ -31,6 +31,9 @@ public class CoinHandler {
     }
 
     public void tick() {
+        if (collectedCoins == 0) {
+            secondValue = 0;
+        }
         firstValue = collectedCoins - 10*secondValue;
         if (firstValue > 9) {
             secondValue++;
