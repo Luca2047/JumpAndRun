@@ -1,6 +1,7 @@
 package de.linkl.Handler;
 
 import de.linkl.GameObjects.GameObject;
+import de.linkl.Main.Game;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -21,6 +22,9 @@ public class ObjectHandler {
         for (int i = 0; i < objects.size(); i++) {
             tempObject = objects.get(i);
             tempObject.tick(objects);
+        }
+        if (Game.completed) {
+            removeAll();
         }
     }
 

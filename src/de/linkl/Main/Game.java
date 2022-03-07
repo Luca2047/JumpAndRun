@@ -6,6 +6,7 @@ import de.linkl.State.ObjectID;
 import de.linkl.Tools.Camera;
 import de.linkl.Tools.LevelLoader;
 import de.linkl.Tools.SoundPlayer;
+import de.linkl.Tools.TextBox;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,6 +20,7 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     protected static boolean paused = false;
     protected static boolean inMenu = true;
+    public static boolean completed = false;
     private double ticksPerSecond = 60;
     private int pauseTimer = 0;
     public static int width = 1280, height = 710;
@@ -37,6 +39,8 @@ public class Game extends Canvas implements Runnable {
     ScrollingBackground scrollingBackground;
     SoundPlayer gameSoundPlayer;
     SoundPlayer menuSoundPlayer;
+    TextBox endingText1;
+    TextBox endingText2;
 
 
     public void init() {                                                                        //in der init Methode werden alle Objekte erstellt und zugewiesen; wird beim Start durch die run Methode aufgerufen
@@ -124,6 +128,7 @@ public class Game extends Canvas implements Runnable {
                 gameSoundPlayer.stop();
                 levelLoader.load(levelLoader.loadedlevel);
                 CoinHandler.collectedCoins = 0;
+                completed = false;
             }
             if (keyHandler.escPressed && pauseTimer >= 60) {                                         // mit escape kann man pausieren, nur einmal pro Sekunde
                 paused = !paused;
@@ -149,22 +154,38 @@ public class Game extends Canvas implements Runnable {
             menuSoundPlayer.loop(SoundPlayer.menuTheme);
         }
         else {                                                                                      // zeigt das Spiel an
-            menuSoundPlayer.stop();
-            gameSoundPlayer.loop(SoundPlayer.theme);
-            g.fillRect(0,0,width,height);
-            g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
+            if (!completed) {
+                menuSoundPlayer.stop();
+                gameSoundPlayer.loop(SoundPlayer.theme);
+                g.fillRect(0,0,width,height);
+                g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
 
-            g2d.translate(-camera.getX(), -camera.getY());
+                g2d.translate(-camera.getX(), -camera.getY());
 
-            backgroundHandler.render(g);
-            objectHandler.render(g);                                                            // rendert jedes Objekt aus der Liste des Objecthandlers
-            coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
+                backgroundHandler.render(g);
+                objectHandler.render(g);                                                            // rendert jedes Objekt aus der Liste des Objecthandlers
+                coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
 
-            g2d.translate(camera.getX(), camera.getY());
-
+                g2d.translate(camera.getX(), camera.getY());
+            }
+            else {
+                //System.exit(0);
+                g.fillRect(0,0,width,height);
+                g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
+                endingText1 = new TextBox(width/2-250, 200, "well done");
+                endingText2 = new TextBox(width/2-450, 400, "press r to restart");
+                objectHandler.render(g);
+                endingText1.render(g);
+                endingText2.render(g);
+            }
         }
+
         g.dispose();                                                                            // dispose() ist eine Methode, die die benötigten Systemressourcen,
         bs.show();                                                                              // welche für das Objekt benötigt, freigibt
+    }
+
+    public static void endGame() {
+        completed = true;
     }
 
 }

@@ -19,7 +19,6 @@ public abstract class GameObject {
     protected boolean showHitbox = false;
 
     protected ObjectID id;
-    protected boolean isUpdating = true;
 
     protected boolean falling = true;
     protected boolean jumping = false;
@@ -33,6 +32,12 @@ public abstract class GameObject {
     }
 
     public GameObject(int x, int y, ObjectID id) {
+        this.x = x;
+        this.y = y;
+        this.id = id;
+    }
+
+    public GameObject(int x, int y) {
         this.x = x;
         this.y = y;
     }

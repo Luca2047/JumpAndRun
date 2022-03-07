@@ -137,7 +137,7 @@ public class Player extends GameObject {
 
     public void collisions(LinkedList<GameObject> objects) {
         for (GameObject tempObject : objects) {
-            if (tempObject.getId() == ObjectID.TILE) {                              // wenn das Objekt in der Liste eine Tile ist
+            if (tempObject.getId() == ObjectID.TILE) {                                          // wenn das Objekt in der Liste eine Tile ist
                 if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {               // wenn die Hitbox(unten) des Players sich mit der dieses Tiles überschneidet
                     y = tempObject.getY() - height;
                     speedY = 0;
@@ -226,11 +226,11 @@ public class Player extends GameObject {
             if (tempObject.getId() == ObjectID.MUSHROOM) {
                 if(getBoundsBottom().intersects(tempObject.getBoundsTop())) {
                     if (soundTimer >= 10) {
-                        soundPlayer.volume = -20;
+                        soundPlayer.volume = -30;
                         soundPlayer.play(SoundPlayer.spring);
                         soundTimer = 0;
                     }
-                    speedY = -18;
+                    speedY = -17;
                     jumping = true;
 
                     if (facingRight) {
@@ -266,6 +266,12 @@ public class Player extends GameObject {
             if (tempObject.getId() == ObjectID.TURTLE) {
                 if (getTotalBounds().intersects(tempObject.getTotalBounds())) {
                     reset();
+                }
+            }
+
+            if (tempObject.getId() == ObjectID.END) {
+                if (getTotalBounds().intersects(tempObject.getTotalBounds())){
+                    Game.endGame();
                 }
             }
 

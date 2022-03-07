@@ -161,6 +161,8 @@ public class LevelLoader {
                         objectHandler.addObject(new Pig(nr * 32, row * 32, ObjectID.PIG));
                     } else if (object == 94) {
                         objectHandler.addObject(new Turtle(nr * 32, row * 32, ObjectID.TURTLE));
+                    } else if (object == 93) {
+                        objectHandler.addObject(new End(nr * 32, row * 32));
                     }
                 }
 
