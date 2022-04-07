@@ -61,91 +61,91 @@ public class LevelLoader {
                     } else if (object == 1) {
                         objectHandler.addObject(new Player(nr*32, row*32, ObjectID.PLAYER, keyHandler));
                     } else if (object == 2) {
-                        objectHandler.addObject(new Tile(nr*32,row*32, 2, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr*32,row*32, 2));
                     } else if (object == 3) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 3, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 3));
                     } else if (object == 4) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 4, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 4));
                     } else if (object == 5) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 5, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 5));
                     } else if (object == 6) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 6, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 6));
                     } else if (object == 7) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 7, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 7));
                     } else if (object == 8) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 8, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 8));
                     } else if (object == 9) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 9, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 9));
                     } else if (object == 10) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 10, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 10));
                     } else if (object == 11) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 11, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 11));
                     } else if (object == 12) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 12, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 12));
                     } else if (object == 13) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 13, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 13));
                     } else if (object == 14) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 14, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 14));
                     } else if (object == 15) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 15, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 15));
                     } else if (object == 16) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 16, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 16));
                     } else if (object == 17) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 17, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 17));
                     } else if (object == 18) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 18, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 18));
                     } else if (object == 19) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 19, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 19));
                     } else if (object == 20) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 20, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 20));
                     } else if (object == 21) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 21, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 21));
                     } else if (object == 22) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 22, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 22));
                     } else if (object == 23) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 23, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 23));
                     } else if (object == 24) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 24, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 24));
                     } else if (object == 25) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 25, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 25));
                     } else if (object == 26) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 26, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 26));
                     } else if (object == 27) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 27, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 27));
                     } else if (object == 28) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 28, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 28));
                     } else if (object == 29) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 29, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 29));
                     } else if (object == 30) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 30, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 30));
                     } else if (object == 31) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 31, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 31));
                     } else if (object == 32) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 32, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 32));
                     } else if (object == 33) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 33, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 33));
                     } else if (object == 34) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 34, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 34));
                     } else if (object == 35) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 35, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 35));
                     } else if (object == 36) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 36, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 36));
                     } else if (object == 37) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 37, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 37));
                     } else if (object == 38) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 38, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 38));
                     } else if (object == 39) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 39, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 39));
                     } else if (object == 40) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 40, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 40));
                     } else if (object == 41) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 41, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 41));
                     } else if (object == 42) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 42, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 42));
                     } else if (object == 43) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 43, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 43));
                     } else if (object == 44) {
-                        objectHandler.addObject(new Tile(nr * 32, row * 32, 44, ObjectID.TILE));
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 44));
                     }
 
 

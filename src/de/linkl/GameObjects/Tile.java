@@ -11,25 +11,27 @@ import java.util.Objects;
 
 public class Tile extends GameObject {
 
-    BufferedImage fullimage;
+    static BufferedImage fullimage;
     BufferedImage image;
     int type;
 
-    public Tile(int x, int y, int type ,ObjectID id) {
-        super(x, y, id);
-        this.id = id;
+    public Tile(int x, int y, int type) {
+        super(x, y);
+        this.id = ObjectID.TILE;
         this.type = type;
         width = 32;
         height = 32;
 
-        try {
-            fullimage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/map/ground_tileset.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (fullimage == null) {        // für bessere Performance soll das gesamte Bild nur einmal geladen werden
+            try {
+                fullimage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/map/ground_tileset.png")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         switch (type) {
-            case 2:                                                                                                 // siehe gimp tileset Bild
+            case 2:                                                                                                 // siehe gimp tileset Bild, legt fest welche Textur für den Block verwendet wird
                 image = fullimage.getSubimage(64, 256, 32, 32);
                 break;
             case 3:
