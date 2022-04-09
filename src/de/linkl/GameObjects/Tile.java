@@ -22,7 +22,7 @@ public class Tile extends GameObject {
         width = 32;
         height = 32;
 
-        if (fullimage == null) {        // für bessere Performance soll das gesamte Bild nur einmal geladen werden
+        if (fullimage == null) {        // für eine deutlich (ca. 900% schneller) kürzere Ladezeit soll das gesamte Bild nur einmal geladen werden, kann zum Test ja mal ausgeklammert werden :)
             try {
                 fullimage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/map/ground_tileset.png")));
             } catch (IOException e) {
@@ -159,6 +159,12 @@ public class Tile extends GameObject {
                 break;
             case 44:
                 image = fullimage.getSubimage(448, 288, 32, 32);
+                break;
+            case 45:
+                image = fullimage.getSubimage(128, 352, 32, 32);
+                break;
+            case 46:
+                image = fullimage.getSubimage(128, 288, 32, 32);
                 break;
         }
     }

@@ -14,8 +14,9 @@ public class Coin extends GameObject {
     AnimationHandler animationHandler;
     BufferedImage[] spinCoin;
 
-    public Coin(int x, int y, ObjectID id) {
-        super(x, y, id);
+    public Coin(int x, int y) {
+        super(x, y);
+        this.x += 5;
         this.id = ObjectID.COIN;
         this.width = 16;
         this.height = 16;

@@ -24,13 +24,17 @@ public class Pig extends GameObject {
     private boolean raged = false;
     private int timerForRage = 0;
 
-    public Pig(int x, int y, ObjectID id) {
-        super(x, y, id);
+    public Pig(int x, int y, boolean facingRight) {
+        super(x, y);
+        this.facingRight = facingRight;
         this.id = ObjectID.PIG;
         this.width = 36;
         this.height = 30;
-        this.speedX = 2;
-        this.facingRight = false;
+        if (facingRight) {
+            this.speedX = 2;
+        } else {
+            this.speedX = -2;
+        }
         this.alive = true;
         showHitbox = true;
         loadSprites();

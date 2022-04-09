@@ -14,7 +14,7 @@ public abstract class GameObject {
     protected boolean alive;
     protected boolean facingRight;
 
-    protected final float g = 0.6f;                                          // Gravitationskonstante
+    protected final float g = 0.55f;                                          // Gravitationskonstante
     protected final int maximumFallSpeed = 20;
     protected boolean showHitbox = false;
 

@@ -17,7 +17,7 @@ public class Player extends GameObject {
 
     private final float g = 0.7f;                                         // Gravitationskonstante
     private final int maximumFallSpeed = 20;
-    private boolean showHitbox = false;
+    private boolean showHitbox = true;
     private int startX;
     private int startY;
     private int soundTimer = 0;
@@ -37,11 +37,11 @@ public class Player extends GameObject {
     AnimationHandler animationHandler;
     SoundPlayer soundPlayer;
 
-    public Player(int x, int y, ObjectID id, KeyHandler keyHandler) {
-        super(x, y, id);
+    public Player(int x, int y, KeyHandler keyHandler) {
+        super(x, y);
         this.startX = x;
         this.startY = y;
-        this.id = id;
+        this.id = ObjectID.PLAYER;
         this.keyHandler = keyHandler;
         this.animationHandler = new AnimationHandler();
         this.soundPlayer = new SoundPlayer();
@@ -107,24 +107,35 @@ public class Player extends GameObject {
         animationHandler.tick();
         collisions(objects);
 
-        if (this.y + this.width >= Game.height) {                                   // wenn er aus der Map fällt wird er auf den Startpunkt gesetzt
+        if (y + height >= Game.height) {                                   // wenn er aus der Map fällt wird er auf den Startpunkt gesetzt
             reset();
         }
-        if (soundTimer <10) {                                                       // damit der sound nicht mehrmals getriggert werden kann
+        if (x <= 0) {                                                     // damit der Spieler nicht links rauslaufen kann
+            x = 1;
+            speedX = 0;
+            animationHandler.setAnimation(idleLeft);
+        }
+        if ((Game.totalWidth - x-width)<= 0) {                            // damit der Spieler nicht rechts rauslaufen kann
+            x = Game.totalWidth - width - 1;
+            speedX = 0;
+            animationHandler.setAnimation(idleRight);
+
+        }
+        if (soundTimer <10) {                                             // damit der sound nicht mehrmals getriggert werden kann
             soundTimer++;
         }
     }
 
     @Override
     public Rectangle getTotalBounds() {
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(x + (width / 4), y, width - (width / 2), height);
     }
     public Rectangle getBoundsBottom() {
-        return new Rectangle(x + (width / 6), y + (height / 2), width - (width / 3), height - (height / 2));
+        return new Rectangle(x + (width / 4), y + (height / 2), width - (width / 2), height - (height / 2));
     }
 
     public Rectangle getBoundsTop() {
-        return new Rectangle(x + (width / 6), y, width - (width / 3), height - (height / 2));
+        return new Rectangle(x + (width / 4), y, width - (width / 2), height - (height / 2));
     }
 
     public Rectangle getBoundsRight() {
@@ -230,7 +241,7 @@ public class Player extends GameObject {
                         soundPlayer.play(SoundPlayer.spring);
                         soundTimer = 0;
                     }
-                    speedY = -17;
+                    speedY = -19;
                     jumping = true;
 
                     if (facingRight) {
@@ -296,10 +307,10 @@ public class Player extends GameObject {
                 soundPlayer.play(SoundPlayer.playerJump);
                 soundTimer = 0;
             }
-
             jumping = true;
             speedY = -14;
         }
+
     }
 
     public void loadSprites() {                                                         // lädt alle Bilder für den Player

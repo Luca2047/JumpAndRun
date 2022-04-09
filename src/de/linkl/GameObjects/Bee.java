@@ -21,8 +21,8 @@ public class Bee extends GameObject{
 
     AnimationHandler animationHandler;
 
-    public Bee(int x, int y, ObjectID id) {
-        super(x, y, id);
+    public Bee(int x, int y) {
+        super(x, y);
         this.id = ObjectID.BEE;
         this.width = 36;
         this.height = 34;
@@ -91,7 +91,7 @@ public class Bee extends GameObject{
 
     @Override
     public Rectangle getTotalBounds() {
-        return new Rectangle(x+(width/4),y+(height/4),width-(width/2),height-(height/2));
+        return new Rectangle(x+(width/4),y+(height/6),width-(width/2),height-(height/2));
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-    public boolean dPressed, aPressed, spacePressed, altPressed, rPressed, escPressed, shiftPressed;
+    public boolean dPressed, aPressed, spacePressed, altPressed, rPressed, escPressed, shiftPressed, upPressed, downPressed, rightPressed, leftPressed;
     public boolean num1Pressed, num2Pressed, num3Pressed, num4Pressed, num5Pressed, num6Pressed;
 
     @Override
@@ -54,6 +54,18 @@ public class KeyHandler implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_6) {
             num6Pressed = true;
         }
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            upPressed = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            downPressed = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightPressed = true;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftPressed = true;
+        }
     }
 
     @Override
@@ -96,6 +108,18 @@ public class KeyHandler implements KeyListener {
         }
         if (e.getKeyCode() == KeyEvent.VK_6) {
             num6Pressed = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+            upPressed = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            downPressed = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightPressed = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftPressed = false;
         }
     }
 }

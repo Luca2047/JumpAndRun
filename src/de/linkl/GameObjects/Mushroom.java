@@ -15,8 +15,8 @@ public class Mushroom extends GameObject{
     AnimationHandler animationHandler;
     BufferedImage[] idle;
 
-    public Mushroom(int x, int y, ObjectID id) {
-        super(x, y, id);
+    public Mushroom(int x, int y) {
+        super(x, y);
         this.id = ObjectID.MUSHROOM;
         this.width = 32;
         this.height = 32;

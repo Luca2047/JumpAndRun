@@ -1,6 +1,7 @@
 package de.linkl.Main;
 
 import de.linkl.GameObjects.GameObject;
+import de.linkl.GameObjects.Player;
 import de.linkl.Handler.*;
 import de.linkl.State.ObjectID;
 import de.linkl.Tools.Camera;
@@ -24,7 +25,7 @@ public class Game extends Canvas implements Runnable {
     private double ticksPerSecond = 60;
     private int pauseTimer = 0;
     public static int width = 1280, height = 710;
-    public static int totalWidth = 2560;
+    public static int totalWidth = 10240;
 
     Window window;
 
@@ -41,6 +42,8 @@ public class Game extends Canvas implements Runnable {
     SoundPlayer menuSoundPlayer;
     TextBox endingText1;
     TextBox endingText2;
+    TextBox pausedText1;
+    TextBox pausedText2;
 
 
     public void init() {                                                                        //in der init Methode werden alle Objekte erstellt und zugewiesen; wird beim Start durch die run Methode aufgerufen
@@ -99,10 +102,10 @@ public class Game extends Canvas implements Runnable {
             while (delta >= 1) {
                 tick();
                 updates++;
+                render();
+                frames++;
                 delta--;
             }
-            render();
-            frames++;
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
@@ -130,12 +133,12 @@ public class Game extends Canvas implements Runnable {
                 CoinHandler.collectedCoins = 0;
                 completed = false;
             }
-            if (keyHandler.escPressed && pauseTimer >= 60) {                                         // mit escape kann man pausieren, nur einmal pro Sekunde
-                paused = !paused;
-                pauseTimer = 0;
-            }
-            pauseTimer++;
         }
+        if (keyHandler.escPressed && pauseTimer >= 60) {                                         // mit escape kann man pausieren, nur einmal pro Sekunde
+            paused = !paused;
+            pauseTimer = 0;
+        }
+        pauseTimer++;
     }
 
     public void render() {                                                                      // stellt die anzuzeigenden Objekte dar
@@ -167,9 +170,15 @@ public class Game extends Canvas implements Runnable {
                 coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
 
                 g2d.translate(camera.getX(), camera.getY());
+
+                if (paused) {
+                    pausedText1 = new TextBox(width/2-150, 200, "paused");
+                    pausedText2 = new TextBox(width/2-500, 300, "press esc to continue");
+                    pausedText1.render(g);
+                    pausedText2.render(g);
+                }
             }
             else {
-                //System.exit(0);
                 g.fillRect(0,0,width,height);
                 g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
                 endingText1 = new TextBox(width/2-250, 200, "well done");

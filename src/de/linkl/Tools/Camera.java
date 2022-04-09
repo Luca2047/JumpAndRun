@@ -8,7 +8,7 @@ public class Camera {
     private float x;
     private float y;
 
-    int offsetMaxX = Game.width;
+    int offsetMaxX = Game.totalWidth;
     int offsetMinX = 0;
 
 

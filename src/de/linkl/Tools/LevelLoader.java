@@ -51,7 +51,7 @@ public class LevelLoader {
                 while (scanner.hasNextInt()) {                                                              // "während es ein nächstes Zeichen (int) gibt"
                     int object = scanner.nextInt();                                                         // int object meint die aktuelle Zahl die der Scanner gelesen hat
                     nr++;
-                    if (nr == 80) {                                                                         // eine Reihe hat hier genau 80 Zeichen
+                    if (nr == Game.totalWidth/32) {                                                         // eine Reihe hat hier genau 320 Zeichen
                         nr = 0;
                         row++;
                     }
@@ -59,7 +59,7 @@ public class LevelLoader {
                     if (object == 0) {                                                                      // die verschiedenen Arten von Objekten, die je nach Wert in dem txt - Dokument platziert werden
 
                     } else if (object == 1) {
-                        objectHandler.addObject(new Player(nr*32, row*32, ObjectID.PLAYER, keyHandler));
+                        objectHandler.addObject(new Player(nr*32, row*32, keyHandler));
                     } else if (object == 2) {
                         objectHandler.addObject(new Tile(nr*32,row*32, 2));
                     } else if (object == 3) {
@@ -146,22 +146,27 @@ public class LevelLoader {
                         objectHandler.addObject(new Tile(nr * 32, row * 32, 43));
                     } else if (object == 44) {
                         objectHandler.addObject(new Tile(nr * 32, row * 32, 44));
+                    } else if (object == 45) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 45));
+                    } else if (object == 46) {
+                        objectHandler.addObject(new Tile(nr * 32, row * 32, 46));
                     }
 
-
                     else if (object == 97) {
-                        objectHandler.addObject(new Bee(nr * 32, row * 32, ObjectID.BEE));
+                        objectHandler.addObject(new Bee(nr * 32, row * 32));
                     } else if (object == 98) {
-                        objectHandler.addObject(new Coin(nr * 32, row * 32, ObjectID.COIN));
+                        objectHandler.addObject(new Coin(nr * 32, row * 32));
                     } else if (object == 99) {
-                        objectHandler.addObject(new Bunny(nr * 32, row * 32, ObjectID.ENEMY));
+                        objectHandler.addObject(new Bunny(nr * 32, row * 32));
                     } else if (object == 96) {
-                        objectHandler.addObject(new Mushroom(nr * 32, row * 32, ObjectID.MUSHROOM));
-                    } else if (object == 95) {
-                        objectHandler.addObject(new Pig(nr * 32, row * 32, ObjectID.PIG));
+                        objectHandler.addObject(new Mushroom(nr * 32, row * 32));
                     } else if (object == 94) {
-                        objectHandler.addObject(new Turtle(nr * 32, row * 32, ObjectID.TURTLE));
+                        objectHandler.addObject(new Pig(nr * 32, row * 32, false));
                     } else if (object == 93) {
+                        objectHandler.addObject(new Pig(nr * 32, row * 32, true));
+                    } else if (object == 95) {
+                        objectHandler.addObject(new Turtle(nr * 32, row * 32));
+                    } else if (object == 90) {
                         objectHandler.addObject(new End(nr * 32, row * 32));
                     }
                 }

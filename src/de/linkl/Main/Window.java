@@ -56,6 +56,7 @@ public class Window extends JFrame implements MouseListener{
         this.setMaximumSize(dimension);
         this.setMinimumSize(dimension);
         this.setLocationRelativeTo(null);
+        this.setAlwaysOnTop(true);
 
         Border border = new LineBorder(Color.RED);
         Border border2 = new BevelBorder(BevelBorder.LOWERED);

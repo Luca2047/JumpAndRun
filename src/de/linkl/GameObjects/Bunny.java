@@ -17,8 +17,8 @@ public class Bunny extends GameObject{
 
     AnimationHandler animationHandler;
 
-    public Bunny(int x, int y, ObjectID id) {
-        super(x, y, id);
+    public Bunny(int x, int y) {
+        super(x, y);
         this.id = ObjectID.ENEMY;
         this.width = 34;
         this.height = 44;

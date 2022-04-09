@@ -23,8 +23,9 @@ public class Turtle extends GameObject {
 
     AnimationHandler animationHandler;
 
-    public Turtle(int x, int y, ObjectID id) {
-        super(x, y, id);
+    public Turtle(int x, int y) {
+        super(x, y);
+        this.x -= 5;
         this.id = ObjectID.TURTLE;
         this.width = 44;
         this.height = 26;
