@@ -154,7 +154,9 @@ public class Pig extends GameObject {
                     if (!raged) {
                         raged = true;
                         speedX *= 2;
-                    } else if (timerForRage >= 20){
+                        timerForRage = 0;
+                    }
+                    if (timerForRage >= 2){
                         setAlive(false);
                         CoinHandler.collectedCoins += 2;
                     }

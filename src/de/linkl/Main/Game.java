@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable {
     ObjectHandler objectHandler;
     ObjectHandler backgroundHandler;
     CoinHandler coinHandler;
+    DeathHandler deathHandler;
     KeyHandler keyHandler;
     LevelLoader levelLoader;
     Camera camera;
@@ -59,6 +60,7 @@ public class Game extends Canvas implements Runnable {
         objectHandler = new ObjectHandler();
         backgroundHandler = new ObjectHandler();
         coinHandler = new CoinHandler();
+        deathHandler = new DeathHandler();
 
         camera = new Camera(0, 0);
         levelLoader = new LevelLoader(objectHandler, backgroundHandler, keyHandler);
@@ -121,6 +123,7 @@ public class Game extends Canvas implements Runnable {
             objectHandler.tick();
             backgroundHandler.tick();
             coinHandler.tick();
+            deathHandler.tick();
 
             for (GameObject gameObject : objectHandler.objects) {           // geht die Liste durch und sucht den Player, dieser soll das fokussierte Objekt der Kamera sein
                 if (gameObject.getId() == ObjectID.PLAYER) {
@@ -131,6 +134,7 @@ public class Game extends Canvas implements Runnable {
                 gameSoundPlayer.stop();
                 levelLoader.load(levelLoader.loadedlevel);
                 CoinHandler.collectedCoins = 0;
+                DeathHandler.deathcount = 0;
                 completed = false;
             }
         }
@@ -168,6 +172,7 @@ public class Game extends Canvas implements Runnable {
                 backgroundHandler.render(g);
                 objectHandler.render(g);                                                            // rendert jedes Objekt aus der Liste des Objecthandlers
                 coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
+                deathHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 55);
 
                 g2d.translate(camera.getX(), camera.getY());
 
@@ -181,11 +186,14 @@ public class Game extends Canvas implements Runnable {
             else {
                 g.fillRect(0,0,width,height);
                 g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
-                endingText1 = new TextBox(width/2-250, 200, "well done");
-                endingText2 = new TextBox(width/2-450, 400, "press r to restart");
+                gameSoundPlayer.loop(SoundPlayer.levelComplete);
+                endingText1 = new TextBox(width/2-200, 200, "well done");
+                endingText2 = new TextBox(width/2-450, 350, "press r to restart");
                 objectHandler.render(g);
                 endingText1.render(g);
                 endingText2.render(g);
+                coinHandler.render(g, width/2-100, 450);
+                deathHandler.render(g, width/2+100, 450);
             }
         }
 
@@ -196,5 +204,4 @@ public class Game extends Canvas implements Runnable {
     public static void endGame() {
         completed = true;
     }
-
 }

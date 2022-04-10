@@ -22,7 +22,7 @@ public class Bunny extends GameObject{
         this.id = ObjectID.ENEMY;
         this.width = 34;
         this.height = 44;
-        this.speedX = 3;
+        this.speedX = 4;
         this.facingRight = false;
         this.alive = true;
         showHitbox = false;

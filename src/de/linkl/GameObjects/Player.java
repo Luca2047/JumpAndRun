@@ -2,6 +2,7 @@ package de.linkl.GameObjects;
 
 import de.linkl.Handler.AnimationHandler;
 import de.linkl.Handler.CoinHandler;
+import de.linkl.Handler.DeathHandler;
 import de.linkl.Handler.KeyHandler;
 import de.linkl.Main.Game;
 import de.linkl.State.ObjectID;
@@ -358,5 +359,6 @@ public class Player extends GameObject {
         x = startX;
         y = startY;
         facingRight = true;
+        DeathHandler.deathcount++;
     }
 }

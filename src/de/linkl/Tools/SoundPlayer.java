@@ -16,6 +16,7 @@ public class SoundPlayer {
     public static File bump;
     public static File playerDown;
     public static File spring;
+    public static File levelComplete;
 
     public float volume;
 
@@ -29,6 +30,8 @@ public class SoundPlayer {
         bump = new File("src/de/linkl/Sounds/bump.wav");
         playerDown = new File("src/de/linkl/Sounds/playerDown.wav");
         spring = new File("src/de/linkl/Sounds/spring.wav");
+        levelComplete = new File("src/de/linkl/Sounds/levelComplete.wav");
+
 
         this.volume = -25f;
     }
