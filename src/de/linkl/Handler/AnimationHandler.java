@@ -34,7 +34,7 @@ public class AnimationHandler {
         }
     }
 
-    public BufferedImage getImage() {
+    public BufferedImage getImage() {                                           // gibt das aktuelle Bild der Animation aus, damit andere Klassen darauf Zugang haben
         return animation[currentImage];
     }
 

@@ -51,16 +51,16 @@ public class Bunny extends GameObject{
         if (!alive){
             objects.remove(this);
         } else {
-            if (falling) {                                           // lässt den Gegner fallen, bzw. ändert die y-Geschwindigkeit um g (Gravitationskonstante)
+            if (falling) {                                              // lässt den Gegner fallen, bzw. ändert die y-Geschwindigkeit um g (Gravitationskonstante)
                 this.speedY += g;
                 if (this.speedY > maximumFallSpeed) {
-                    speedY = maximumFallSpeed;
+                    speedY = maximumFallSpeed;                          // geht nicht über eine maximale Geschwindigkeit hinaus
                 }
             }
-            this.x += this.speedX;                                              // ändert die x und y Position um die jeweilige Geschwindigkeit
+            this.x += this.speedX;                                      // ändert die x und y Position um die jeweilige Geschwindigkeit
             this.y += this.speedY;
 
-            if (speedX > 0) {
+            if (speedX > 0) {                                           // je nach Richtung ändert sich das Animationsset
                 animationHandler.setAnimation(runRight);
                 facingRight = true;
             } else {
@@ -68,8 +68,8 @@ public class Bunny extends GameObject{
                 facingRight = false;
             }
 
-            animationHandler.tick();
-            collisions(objects);
+            animationHandler.tick();                                    // updatet die Animation
+            collisions(objects);                                        // prüft Kollisionen
         }
     }
 
@@ -90,11 +90,11 @@ public class Bunny extends GameObject{
         return new Rectangle(x,y,width,height);
     }
 
-    public void collisions(LinkedList<GameObject> objects) {
+    public void collisions(LinkedList<GameObject> objects) {                            // prüft Kollisionen mit anderen Objekten, aus der Liste die übergeben wird
         for (GameObject tempObject : objects) {
             if (tempObject.getId() == ObjectID.TILE) {
 
-                if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {               // wenn die Hitbox(unten) des Gegners sich mit der dieses Tiles überschneidet
+                if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {        // wenn die Hitbox(unten) des Gegners sich mit der dieses Tiles überschneidet
                     y = tempObject.getY() - height;
                     speedY = 0;
                     falling = false;
@@ -103,12 +103,12 @@ public class Bunny extends GameObject{
                 }
 
                 if (getBoundsRight().intersects(tempObject.getTotalBounds())) {          // wenn die Hitbox(rechts) des Gegners sich mit der dieses Tiles überschneidet
-                    x = tempObject.getX() - width;
+                    x = tempObject.getX() - width;                                       // dreht er um
                     speedX = -speedX;
                     facingRight = !facingRight;
                 }
                 if (getBoundsLeft().intersects(tempObject.getTotalBounds())) {           // wenn die Hitbox(links) des Gegners sich mit der dieses Tiles überschneidet
-                    x = tempObject.getX() + tempObject.getWidth();
+                    x = tempObject.getX() + tempObject.getWidth();                       // dreht er um
                     speedX = -speedX;
                     facingRight = !facingRight;
                 }
@@ -116,7 +116,7 @@ public class Bunny extends GameObject{
         }
     }
 
-    public void loadSprites() {
+    public void loadSprites() {                             // lädt die Bilder mit allen Teilen der Animation und lädt die einzelnen Teile als Subimages in ein Array
         try {
             BufferedImage[] fullImage = new BufferedImage[2];
             fullImage[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/bunny/bunny_runRight.png")));
@@ -125,7 +125,7 @@ public class Bunny extends GameObject{
             runRight = new BufferedImage[12];
             runLeft = new BufferedImage[12];
 
-            for (int i=0; i<12; i++) {
+            for (int i=0; i<12; i++) {                      // hier wird das gesamte Bild durchgegangen und die einzelnen Subimages gemacht
                 runRight[i] = fullImage[0].getSubimage(i*34, 0, 34, 44);
                 runLeft[i] = fullImage[1].getSubimage(374-i*34, 0, 34, 44);
             }

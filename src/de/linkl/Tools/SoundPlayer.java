@@ -33,10 +33,10 @@ public class SoundPlayer {
         levelComplete = new File("src/de/linkl/Sounds/levelComplete.wav");
 
 
-        this.volume = -25f;
+        this.volume = -25f;                                                                                         // setzte eine standard Lautstärke
     }
 
-    public void play(File file) {
+    public void play(File file) {                                                                                   // spielt einen Sound einmal
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(file));
@@ -79,5 +79,5 @@ public class SoundPlayer {
 
     public void stop() {
         clip.stop();
-    }
+    }                                                                               // stopp Sound der geloopt wird
 }

@@ -86,7 +86,7 @@ public class Turtle extends GameObject {
         }
     }
 
-    public void loadSprites() {
+    public void loadSprites() {                             // lädt die Bilder mit allen Teilen der Animation und lädt die einzelnen Teile als Subimages in ein Array
         try {
             BufferedImage[] fullImage = new BufferedImage[4];
             fullImage[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/turtle/turtle_spikesOut.png")));
@@ -97,7 +97,7 @@ public class Turtle extends GameObject {
             idle2 = new BufferedImage[14];
             idle1 = new BufferedImage[14];
 
-            for (int i = 0; i < 14; i++) {
+            for (int i = 0; i < 14; i++) {                                                      // hier wird das gesamte Bild durchgegangen und die einzelnen Subimages gemacht
                 idle2[i] = fullImage[2].getSubimage(i * 44, 0, 44, 26);
                 idle1[i] = fullImage[3].getSubimage(i * 44, 0, 44, 26);
             }

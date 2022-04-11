@@ -50,10 +50,10 @@ public class Bee extends GameObject{
 
     @Override
     public void tick(LinkedList<GameObject> objects) {
-        if (!alive) {
+        if (!alive) {                                                   // wenn tot, dann wird er aus der Liste des Objekt Handlers entfernt
             objects.remove(this);
         } else {
-            if (!attacking) {
+            if (!attacking) {                                           // legt den Zustand der Biene fest, also ob sie angreift oder normal fliegt
                 if (hoverTimer >= 30) {
                     speedY = -speedY;
                     hoverTimer = 0;
@@ -64,7 +64,7 @@ public class Bee extends GameObject{
             }
 
             this.y += speedY;
-            animationHandler.tick();
+            animationHandler.tick();                                    // updatet die Animation
             hoverTimer++;
             attack(objects);
         }
@@ -73,14 +73,14 @@ public class Bee extends GameObject{
     public void attack(LinkedList<GameObject> objects) {
         for (GameObject tempObject : objects) {
             if (tempObject.getId() == ObjectID.TILE) {
-                if (getTotalBounds().intersects(tempObject.getTotalBounds())) {               // wenn die Hitbox(unten) des Gegners sich mit der dieses Tiles überschneidet
+                if (getTotalBounds().intersects(tempObject.getTotalBounds())) {               // wenn die Hitbox(unten) des Gegners sich mit der dieses Tiles überschneidet, fliegt er wieder nach oben
                     animationHandler.setAnimation(idle);
                     y = tempObject.getY() - height;
                     speedY = -2;
                 }
             }
             if (tempObject.getId() == ObjectID.PLAYER) {
-                if ((Math.abs(getX() - tempObject.getX()) <= 25) && !attacking && (tempObject.getY() > getY())) {
+                if ((Math.abs(getX() - tempObject.getX()) <= 25) && !attacking && (tempObject.getY() > getY())) {           // wird ausgelöst, wenn der Spieler sich der Biene nähert
                     animationHandler.setAnimation(attack);
                     speedY = 10;
                     attacking = true;
@@ -99,7 +99,7 @@ public class Bee extends GameObject{
         return null;
     }
 
-    public void loadSprites() {
+    public void loadSprites() {                                             // lädt die Bilder mit allen Teilen der Animation und lädt die einzelnen Teile als Subimages in ein Array
         try {
             BufferedImage[] fullImage = new BufferedImage[2];
             fullImage[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/bee/bee_idle.png")));
@@ -108,7 +108,7 @@ public class Bee extends GameObject{
             idle = new BufferedImage[6];
             attack = new BufferedImage[8];
 
-            for (int i=0; i<8; i++) {
+            for (int i=0; i<8; i++) {                                                           // hier wird das gesamte Bild durchgegangen und die einzelnen Subimages gemacht
                 attack[i] = fullImage[1].getSubimage(i*36, 0, 36, 34);
                 if (i<6) {
                     idle[i] = fullImage[0].getSubimage(i*36, 0, 36, 34);

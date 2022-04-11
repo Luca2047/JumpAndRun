@@ -35,10 +35,10 @@ public class LevelLoader {
 
     public void load(String path) {                                                                     // Methode um eine Txt Datei zu laden
         if (levelloaded) {
-            objectHandler.removeAll();
+            objectHandler.removeAll();                                                                  // falls das Level schon geladen war, müssen erst alle Objekte entfernt werden
             backgroundHandler.removeAll();
             levelloaded = false;
-            load(path);
+            load(path);                                                                                 // dann wird die Methode nochmal aufgerufen
         }
         else {
             file = new File(path);                                                                          // Festlegung des Pfades für die Datei
@@ -51,7 +51,7 @@ public class LevelLoader {
                 while (scanner.hasNextInt()) {                                                              // "während es ein nächstes Zeichen (int) gibt"
                     int object = scanner.nextInt();                                                         // int object meint die aktuelle Zahl die der Scanner gelesen hat
                     nr++;
-                    if (nr == Game.totalWidth/32) {                                                         // eine Reihe hat hier genau 320 Zeichen
+                    if (nr == Game.totalWidth/32) {                                                         // eine Reihe hat Game.totalWidth/32 Zeichen
                         nr = 0;
                         row++;
                     }
@@ -171,12 +171,12 @@ public class LevelLoader {
                     }
                 }
 
-                backgroundHandler.addObject(new Cloud(Game.totalWidth, 100, null));
+                backgroundHandler.addObject(new Cloud(Game.totalWidth, 100, null));                             // Wolken und fliegende Inseln
                 backgroundHandler.addObject(new Cloud(Game.totalWidth/2, 50, null));
                 backgroundHandler.addObject(new Cloud(Game.totalWidth/6, 150, null));
                 backgroundHandler.addObject(new Cloud(Game.totalWidth + Game.totalWidth/2, 175, null));
-                backgroundHandler.addObject(new FloatingIsland(Game.totalWidth, 450, null));
-                backgroundHandler.addObject(new FloatingIsland(Game.totalWidth/6 + 200, 550, null));
+                backgroundHandler.addObject(new FloatingIsland(Game.totalWidth, 400, null));
+                backgroundHandler.addObject(new FloatingIsland(Game.totalWidth/6 + 200, 450, null));
 
                 levelloaded = true;
                 loadedlevel = path;

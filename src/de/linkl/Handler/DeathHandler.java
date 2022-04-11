@@ -25,7 +25,7 @@ public class DeathHandler {
     }
 
     public void tick() {
-        if (deathcount == 0) {
+        if (deathcount == 0) {                      // kontrolliert die Werte der zwei Ziffern der Anzeige
             secondValue = 0;
         }
         firstValue = deathcount - 10*secondValue;
@@ -41,7 +41,7 @@ public class DeathHandler {
         g.drawImage(skullSymbol, x-35, y, width, height, null);
     }
     
-    public void loadSprites() {
+    public void loadSprites() {                                 // lädt die Bilder mit allen Zahlen und lädt die einzelnen Ziffern als Subimages in ein Array
         try {
             allNumbers = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/textgray.png")));
 

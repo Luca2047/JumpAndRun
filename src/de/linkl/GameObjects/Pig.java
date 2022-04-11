@@ -36,7 +36,7 @@ public class Pig extends GameObject {
             this.speedX = -2;
         }
         this.alive = true;
-        showHitbox = true;
+        showHitbox = false;
         loadSprites();
         animationHandler = new AnimationHandler();
         animationHandler.setAnimation(idleLeft);
@@ -57,8 +57,8 @@ public class Pig extends GameObject {
 
             this.x += this.speedX;                                              // ändert die x und y Position um die jeweilige Geschwindigkeit
 
-            if (speedX > 0 && !raged) {
-                animationHandler.setAnimation(walkRight);
+            if (speedX > 0 && !raged) {                                         // legt den Zustand des Pigs fest, also ob er wütend ist bzw. sich so verhält
+                animationHandler.setAnimation(walkRight);                       // und in welche Richtung er schaut
                 facingRight = true;
             } else if (!raged){
                 animationHandler.setAnimation(walkLeft);
@@ -98,7 +98,7 @@ public class Pig extends GameObject {
         return new Rectangle(x + (width / 6), y + (height / 2), width - (width / 3), height - (height / 2));
     }
 
-    public void loadSprites() {
+    public void loadSprites() {                                             // lädt die Bilder mit allen Teilen der Animation und lädt die einzelnen Teile als Subimages in ein Array
         try {
             BufferedImage[] fullImage = new BufferedImage[6];
             fullImage[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/pig/pig_idleRight.png")));
@@ -115,7 +115,7 @@ public class Pig extends GameObject {
             walkRight = new BufferedImage[16];
             walkLeft = new BufferedImage[16];
 
-            for (int i=0; i<16; i++) {
+            for (int i=0; i<16; i++) {                                        // hier wird das gesamte Bild durchgegangen und die einzelnen Subimages gemacht
                 if (i<12) {
                     runRight[i] = fullImage[2].getSubimage(i*36, 0, 36, 30);
                     runLeft[i] = fullImage[3].getSubimage(396-i*36, 0, 36, 30);
@@ -138,12 +138,12 @@ public class Pig extends GameObject {
             if (tempObject.getId() == ObjectID.TILE) {
 
                 if (getBoundsRight().intersects(tempObject.getTotalBounds())) {          // wenn die Hitbox(rechts) des Gegners sich mit der dieses Tiles überschneidet
-                    x = tempObject.getX() - width;
+                    x = tempObject.getX() - width;                                       // dreht er um
                     speedX = -speedX;
                     facingRight = !facingRight;
                 }
                 if (getBoundsLeft().intersects(tempObject.getTotalBounds())) {           // wenn die Hitbox(links) des Gegners sich mit der dieses Tiles überschneidet
-                    x = tempObject.getX() + tempObject.getWidth();
+                    x = tempObject.getX() + tempObject.getWidth();                       // dreht er um
                     speedX = -speedX;
                     facingRight = !facingRight;
                 }

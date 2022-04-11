@@ -34,7 +34,7 @@ public class Window extends JFrame implements MouseListener{
         loadFont();
         dimension = new Dimension(width, height);
         try {
-            frameIcon = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/frameIcon.png")));
+            frameIcon = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/frameIcon.png")));   // laden der Bilder fürs Icon, play-Button, close-Button
             play = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/play.png")));
             close = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/close.png")));
         } catch (IOException e) {
@@ -58,11 +58,9 @@ public class Window extends JFrame implements MouseListener{
         this.setLocationRelativeTo(null);
         this.setAlwaysOnTop(true);
 
-        Border border = new LineBorder(Color.RED);
-        Border border2 = new BevelBorder(BevelBorder.LOWERED);
         Border border3 = new EtchedBorder(EtchedBorder.RAISED);
 
-        start = new JButton("START");
+        start = new JButton("START");                                   // erstellt den start-Button
         start.setBounds(540, 200, 200, 50);
         start.addMouseListener(this);
         start.setBackground(new Color(181, 181, 181));
@@ -71,7 +69,7 @@ public class Window extends JFrame implements MouseListener{
         start.setFont(font);
         this.add(start);
 
-        exit = new JButton("Exit");
+        exit = new JButton("Exit");                                     // erstellt den close-Button
         exit.setBounds(540, 300, 200, 50);
         exit.addMouseListener(this);
         exit.setBackground(new Color(181, 181, 181));
@@ -80,13 +78,12 @@ public class Window extends JFrame implements MouseListener{
         exit.setFont(font);
         this.add(exit);
 
-        titleBox = new TextBox(Game.width/2-220, 100, "java game");
+        titleBox = new TextBox(Game.width/2-220, 100, "java world");
 
     }
 
-    public void loadFont() {
+    public void loadFont() {                    // lädt eine andere Schriftart und wendet diese an
         try {
-
             font = Font.createFont(Font.TRUETYPE_FONT, new File("src/de/linkl/Graphics/font.ttf")).deriveFont(20f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("src/de/linkl/Graphics/font.ttf")));
@@ -98,7 +95,7 @@ public class Window extends JFrame implements MouseListener{
 
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(MouseEvent e) {                            // MouseListener um die JButtons klicken zu können
         if (e.getSource() == start) {
             start.setVisible(false);
             exit.setVisible(false);

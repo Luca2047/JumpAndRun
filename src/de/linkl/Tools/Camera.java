@@ -8,7 +8,7 @@ public class Camera {
     private float x;
     private float y;
 
-    int offsetMaxX = Game.totalWidth;
+    int offsetMaxX = 2670;                                                      // bis zu welcher Position die Kamera mitgehen kann
     int offsetMinX = 0;
 
 
@@ -19,7 +19,7 @@ public class Camera {
 
     public void tick(GameObject object) {                                       // bei jedem tick wird die Position der Kamera auf die des Gameobjects bewegt
         x = object.getX() - Game.width / 2f + Game.width/6f;
-        if (x > offsetMaxX) {
+        if (x > offsetMaxX) {                                                   // Kamera kann nicht über diese Position gehen
             x = offsetMaxX;
         }
         else if (x < offsetMinX) {

@@ -29,7 +29,7 @@ public class ScrollingBackground {
     }
 
     public void render(Graphics g) {
-        x -= 1;
+        x -= 1;                                         // die Scrollanimation besteht aus zwei identischen Bildern, die sich in einem Abstand nach links bewegen
         x2 -= 1;
         if (x+image.getWidth() <= 0) {
             x = image.getWidth();

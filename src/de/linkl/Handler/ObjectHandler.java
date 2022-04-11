@@ -23,7 +23,7 @@ public class ObjectHandler {
             tempObject = objects.get(i);
             tempObject.tick(objects);
         }
-        if (Game.completed) {
+        if (Game.completed) {                                                   // wenns Spiel fertig ist, werden alle Objekte aus der Liste entfernt
             removeAll();
         }
     }
@@ -36,7 +36,7 @@ public class ObjectHandler {
         this.objects.remove(object);
     }
 
-    public void removeAll() {
+    public void removeAll() {                                                           // entfernt alle Objekte
         this.objects.removeAll(objects);
     }
 }

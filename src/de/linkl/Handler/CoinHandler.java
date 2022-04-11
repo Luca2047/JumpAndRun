@@ -31,7 +31,7 @@ public class CoinHandler {
     }
 
     public void tick() {
-        if (collectedCoins == 0) {
+        if (collectedCoins == 0) {                              // kontrolliert die Werte der zwei Ziffern der Anzeige
             secondValue = 0;
         }
         firstValue = collectedCoins - 10*secondValue;
@@ -45,10 +45,10 @@ public class CoinHandler {
     public void render(Graphics g, int x, int y) {
         g.drawImage(firstNum[firstValue], x + 8*scale, y, 8*scale, 10*scale, null);
         g.drawImage(secondNum[secondValue], x, y, 8*scale, 10*scale, null);
-        g.drawImage(animationHandler.getImage(), x-35, y, width, height, null);
+        g.drawImage(animationHandler.getImage(), x-35, y, width, height, null);                                 // zeigt die Münze neben den Zahlen an
     }
 
-    public void loadSprites() {
+    public void loadSprites() {                     // lädt die Bilder mit allen Zahlen und lädt die einzelnen Ziffern als Subimages in ein Array
         try {
             allNumbers = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/textgray.png")));
 

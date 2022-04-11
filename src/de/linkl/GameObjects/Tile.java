@@ -15,12 +15,14 @@ public class Tile extends GameObject {
     BufferedImage image;
     int type;
 
+
     public Tile(int x, int y, int type) {
         super(x, y);
         this.id = ObjectID.TILE;
         this.type = type;
         width = 32;
         height = 32;
+        showHitbox = false;
 
         if (fullimage == null) {        // für eine deutlich (ca. 900% schneller) kürzere Ladezeit soll das gesamte Bild nur einmal geladen werden, kann zum Test ja mal ausgeklammert werden :)
             try {
@@ -172,6 +174,12 @@ public class Tile extends GameObject {
     @Override
     public void render(Graphics g) {
         g.drawImage(image, x, y, width, height, null);
+
+        if (showHitbox) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.draw(getTotalBounds());
+        }
+
     }
 
     @Override

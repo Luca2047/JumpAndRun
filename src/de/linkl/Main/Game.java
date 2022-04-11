@@ -25,7 +25,9 @@ public class Game extends Canvas implements Runnable {
     private double ticksPerSecond = 60;
     private int pauseTimer = 0;
     public static int width = 1280, height = 710;
-    public static int totalWidth = 10240;
+    public static int totalWidth = 3936;
+
+    public int i = 0;
 
     Window window;
 
@@ -41,13 +43,14 @@ public class Game extends Canvas implements Runnable {
     ScrollingBackground scrollingBackground;
     SoundPlayer gameSoundPlayer;
     SoundPlayer menuSoundPlayer;
+    SoundPlayer endingSoundplayer;
     TextBox endingText1;
     TextBox endingText2;
     TextBox pausedText1;
     TextBox pausedText2;
 
 
-    public void init() {                                                                        //in der init Methode werden alle Objekte erstellt und zugewiesen; wird beim Start durch die run Methode aufgerufen
+    public void init() {                                   //in der init Methode werden alle Objekte erstellt und zugewiesen; wird beim Start durch die run Methode aufgerufen
 
         try {
             gameBackground = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/map/sky.png")));
@@ -75,28 +78,30 @@ public class Game extends Canvas implements Runnable {
         gameSoundPlayer = new SoundPlayer();
         gameSoundPlayer.load();
 
-        window = new Window(1280, 710, "JavaGame");
+        endingSoundplayer = new SoundPlayer();
+        endingSoundplayer.load();
+
+        window = new Window(1280, 710, "Java World");
         window.add(this);
         window.setVisible(true);
     }
 
-    public synchronized void start() {
+    public synchronized void start() {                                  // startet das ganze Spiel bzw. Thread
         running = true;
         thread = new Thread(this);
         run();
     }
 
     @Override
-    public void run() {                                                                             // wird ausgeführt wenn der Thread gestartet wird
-        init();                                                                                     // beinhaltet die Game-Loop, dass das Spiel auf einer
-        this.requestFocusInWindow();                                                                // bestimmten Geschwindigkeit läuft (hier: 60 ticks pro Sekunde)
+    public void run() {                                                                                           // wird ausgeführt wenn der Thread gestartet wird
+        init();                                                                                                   // beinhaltet die Game-Loop, dass das Spiel auf einer
+        this.requestFocusInWindow();                                                                              // bestimmten Geschwindigkeit läuft (hier: 60 ticks pro Sekunde)
 
         long lastTime = System.nanoTime();
         double ns = 1000000000 / ticksPerSecond;
         double delta = 0;
         long timer = System.currentTimeMillis();
         int updates = 0;
-        int frames = 0;
         while (running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
@@ -105,14 +110,12 @@ public class Game extends Canvas implements Runnable {
                 tick();
                 updates++;
                 render();
-                frames++;
                 delta--;
             }
 
-            if (System.currentTimeMillis() - timer > 1000) {
+            if (System.currentTimeMillis() - timer > 1000) {                                                        // gibt die Updates in der Konsole aus
                 timer += 1000;
-                System.out.println("| FPS: " + frames + " || TICKS: " + updates + " |");
-                frames = 0;
+                System.out.println("| TICKS/FPS: " + updates + " |");
                 updates = 0;
             }
         }
@@ -132,8 +135,9 @@ public class Game extends Canvas implements Runnable {
             }
             if (keyHandler.rPressed) {                                      // mit "R" lässt sich das Level neu starten
                 gameSoundPlayer.stop();
+                i = 0;
                 levelLoader.load(levelLoader.loadedlevel);
-                CoinHandler.collectedCoins = 0;
+                CoinHandler.collectedCoins = 0;                             // Münzen und Deathcounter setzen sich zurück
                 DeathHandler.deathcount = 0;
                 completed = false;
             }
@@ -167,26 +171,31 @@ public class Game extends Canvas implements Runnable {
                 g.fillRect(0,0,width,height);
                 g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
 
-                g2d.translate(-camera.getX(), -camera.getY());
+                g2d.translate(-camera.getX(), -camera.getY());                                      // bewegt die Kamera auf den richtigen Punkt
 
-                backgroundHandler.render(g);
+                backgroundHandler.render(g);                                                        // damit die Objekte im Hintergrund hinter den anderen sind, müssen diese zuerst sichtbar gemacht werden
                 objectHandler.render(g);                                                            // rendert jedes Objekt aus der Liste des Objecthandlers
                 coinHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 20);
                 deathHandler.render(g, (int)camera.getX() + 1200, (int)camera.getY() + 55);
 
-                g2d.translate(camera.getX(), camera.getY());
+                g2d.translate(camera.getX(), camera.getY());                                        // bewegt die Kamera auf den richtigen Punkt
 
-                if (paused) {
-                    pausedText1 = new TextBox(width/2-150, 200, "paused");
+                if (paused) {                                                                       // wenn das Spiel pausiert wird
+                    pausedText1 = new TextBox(width/2-150, 200, "paused");                //zeigt den Pausen Text an
                     pausedText2 = new TextBox(width/2-500, 300, "press esc to continue");
                     pausedText1.render(g);
                     pausedText2.render(g);
                 }
             }
-            else {
+            else {                                                                                  // zeigt den Endscreen an
                 g.fillRect(0,0,width,height);
                 g.drawImage(gameBackground, 0, 0, Game.width, Game.height, null);
-                gameSoundPlayer.loop(SoundPlayer.levelComplete);
+                gameSoundPlayer.stop();
+                endingSoundplayer.volume = -10;
+                if (i<1) {
+                    endingSoundplayer.play(SoundPlayer.levelComplete);                              // damit der End-Sound nur einmal abgespielt wird
+                    i++;
+                }
                 endingText1 = new TextBox(width/2-200, 200, "well done");
                 endingText2 = new TextBox(width/2-450, 350, "press r to restart");
                 objectHandler.render(g);

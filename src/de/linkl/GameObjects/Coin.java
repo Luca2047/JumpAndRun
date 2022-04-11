@@ -21,6 +21,7 @@ public class Coin extends GameObject {
         this.width = 16;
         this.height = 16;
         this.alive = true;
+        showHitbox = false;
 
         loadSprites();
         animationHandler = new AnimationHandler();
@@ -30,7 +31,7 @@ public class Coin extends GameObject {
 
     @Override
     public Rectangle getTotalBounds() {
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(x, y + (height/2), width, height);
     }
 
     @Override
@@ -42,6 +43,11 @@ public class Coin extends GameObject {
     @Override
     public void render(Graphics g) {
         g.drawImage(animationHandler.getImage(), x, y + (int)(width*scale/2), (int)(width*scale), (int)(width*scale), null);
+
+        if (showHitbox) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.draw(getTotalBounds());
+        }
     }
 
     @Override
@@ -51,13 +57,13 @@ public class Coin extends GameObject {
         }
         animationHandler.tick();
     }
-    public void loadSprites () {
+    public void loadSprites () {                                                                // hier wird das gesamte Bild durchgegangen und die einzelnen Subimages gemacht
         try {
             BufferedImage fullImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/coin/coinVersion2.png")));
             spinCoin = new BufferedImage[14];
 
             for (int i=0; i<14; i++) {
-                spinCoin[i] = fullImage.getSubimage(i * 32, 0, 32, 32);
+                spinCoin[i] = fullImage.getSubimage(i * 32, 0, 32, 32);                 // hier wird das gesamte Bild durchgegangen und die einzelnen Subimages gemacht
             }
         } catch (IOException e) {
             e.printStackTrace();

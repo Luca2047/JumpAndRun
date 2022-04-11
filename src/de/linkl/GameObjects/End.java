@@ -48,12 +48,12 @@ public class End extends GameObject {
         return null;
     }
 
-    public void loadSprites() {
+    public void loadSprites() {                             // lädt die Bilder mit allen Teilen der Animation und lädt die einzelnen Teile als Subimages in ein Array
         try {
             fullImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/greenPortal.png")));
             animation = new BufferedImage[8];
 
-            for (int i=0;i<8;i++) {
+            for (int i=0;i<8;i++) {                         // hier wird das gesamte Bild durchgegangen und die einzelnen Subimages gemacht
                 animation[i] = fullImage.getSubimage(i*32,0,32,64);
             }
         } catch (IOException e) {

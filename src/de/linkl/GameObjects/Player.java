@@ -18,7 +18,7 @@ public class Player extends GameObject {
 
     private final float g = 0.7f;                                         // Gravitationskonstante
     private final int maximumFallSpeed = 20;
-    private boolean showHitbox = true;
+    private boolean showHitbox = false;
     private int startX;
     private int startY;
     private int soundTimer = 0;
@@ -82,8 +82,8 @@ public class Player extends GameObject {
         this.x += this.speedX;                                              // ändert die x und y Position um die jeweilige Geschwindigkeit
         this.y += this.speedY;
 
-        if (speedX > 0 && !jumping && !onEnemy) {
-            animationHandler.setAnimation(runRight);
+        if (speedX > 0 && !jumping && !onEnemy) {                           // legt den Zustand der Animation fest, also ob er springt, fällt oder nach link oder rechts läuft, oder nichts macht
+            animationHandler.setAnimation(runRight);                        // und in welche Richtung er schaut
             animationHandler.setDelay(45);
             facingRight = true;
         } else if (speedX < 0 && !jumping && !onEnemy) {
@@ -104,7 +104,7 @@ public class Player extends GameObject {
             animationHandler.setDelay(-1);
         }
 
-        input();
+        input();                                                        // prüft Spieler Eingaben
         animationHandler.tick();
         collisions(objects);
 
@@ -122,7 +122,7 @@ public class Player extends GameObject {
             animationHandler.setAnimation(idleRight);
 
         }
-        if (soundTimer <10) {                                             // damit der sound nicht mehrmals getriggert werden kann
+        if (soundTimer <10) {                                             // damit der sound nicht mehrmals zu schnell hintereinander getriggert werden kann
             soundTimer++;
         }
     }
@@ -147,11 +147,11 @@ public class Player extends GameObject {
         return new Rectangle(x + (width / 12), y + (height / 4), width / 10, height - (height / 2));
     }
 
-    public void collisions(LinkedList<GameObject> objects) {
+    public void collisions(LinkedList<GameObject> objects) {                                    // prüft die Kollision mit anderen Objekten aus der Liste
         for (GameObject tempObject : objects) {
             if (tempObject.getId() == ObjectID.TILE) {                                          // wenn das Objekt in der Liste eine Tile ist
                 if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {               // wenn die Hitbox(unten) des Players sich mit der dieses Tiles überschneidet
-                    y = tempObject.getY() - height;
+                    y = tempObject.getY() - height;                                             // wird der Spieler wieder auf den Block gesetzt und seine y-Geschwindigkeit auf 0 gesetzt
                     speedY = 0;
                     falling = false;
                     jumping = false;
@@ -160,36 +160,39 @@ public class Player extends GameObject {
                     falling = true;
                 }
 
-                if (getBoundsTop().intersects(tempObject.getTotalBounds())) {
+                if (getBoundsTop().intersects(tempObject.getTotalBounds())) {               // damit der Spieler nicht oben in einen Block reinspringen kann
                     y = tempObject.getY() + tempObject.getHeight();
                     speedY = 0;
                 } else {
                     if (getBoundsRight().intersects(tempObject.getTotalBounds())) {          // wenn die Hitbox(rechts) des Players sich mit der dieses Tiles überschneidet
-                        x = tempObject.getX() - width;
+                        x = tempObject.getX() - width;                                       // kann er nicht weiter laufen
                         speedX = 0;
                         animationHandler.setAnimation(idleRight);
                     }
 
                     if (getBoundsLeft().intersects(tempObject.getTotalBounds())) {           // wenn die Hitbox(links) des Players sich mit der dieses Tiles überschneidet
-                        x = tempObject.getX() + tempObject.getWidth();
+                        x = tempObject.getX() + tempObject.getWidth();                       // kann er nicht weiter laufen
                         speedX = 0;
                         animationHandler.setAnimation(idleLeft);
                     }
                 }
             }
 
-            if (tempObject.getId() == ObjectID.ENEMY) {
-                if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {
+            if (tempObject.getId() == ObjectID.ENEMY || tempObject.getId() == ObjectID.BEE || tempObject.getId() == ObjectID.PIG) {
+                if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {            // wenn der Spieler auf bestimmte Gegner (Bunny, Bee, Pig) springt
                     if (soundTimer >= 10) {
                         soundPlayer.volume = -20;
                         soundPlayer.play(SoundPlayer.bump);
                         soundTimer = 0;
                     }
 
-                    tempObject.setAlive(false);
-                    speedY = -8;
+                    if (tempObject.getId() == ObjectID.ENEMY) {                             // nur bei einem Bunny wir dieser sofort entfernt
+                        tempObject.setAlive(false);                                         // entfernt den Gegner aus der Liste
+                    }
+
+                    speedY = -8;                                                            // man springt von den Gegner ab
                     onEnemy = true;
-                    if (facingRight) {
+                    if (facingRight) {                                                      // legt dabei die Richtung der Animation fest
                         animationHandler.setAnimation(spinRight);
                     } else {
                         animationHandler.setAnimation(spinLeft);
@@ -197,52 +200,31 @@ public class Player extends GameObject {
                     animationHandler.setDelay(60);
                     CoinHandler.collectedCoins++;
                 } else if (getBoundsTop().intersects(tempObject.getTotalBounds()) || getBoundsRight().intersects(tempObject.getTotalBounds()) || getBoundsLeft().intersects(tempObject.getTotalBounds())) {
-                    reset();
-                }
-            }
-
-            if (tempObject.getId() == ObjectID.BEE) {
-                if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {
-                    if (soundTimer >= 10) {
-                        soundPlayer.volume = -20;
-                        soundPlayer.play(SoundPlayer.bump);
-                        soundTimer = 0;
-                    }
-
-                    onEnemy = true;
-                    speedY = -8;
-                    if (facingRight) {
-                        animationHandler.setAnimation(spinRight);
-                    } else {
-                        animationHandler.setAnimation(spinLeft);
-                    }
-                    animationHandler.setDelay(60);
-                } else if (getTotalBounds().intersects(tempObject.getTotalBounds()) && !onEnemy) {
-                    reset();
+                    reset();                                                                // setzt den Spieler auf die Startposition zurück
                 }
             }
 
             if (tempObject.getId() == ObjectID.COIN) {
                 if(getTotalBounds().intersects(tempObject.getTotalBounds())) {
-                    if (soundTimer >= 10) {
+                    if (soundTimer >= 5) {
                         soundPlayer.volume = -30;
                         soundPlayer.play(SoundPlayer.coin);
                         soundTimer = 0;
                     }
 
                     tempObject.setAlive(false);
-                    CoinHandler.collectedCoins++;
+                    CoinHandler.collectedCoins++;                                               // erhöht die Menge gesammelter Münzen
                 }
             }
 
-            if (tempObject.getId() == ObjectID.MUSHROOM) {
+            if (tempObject.getId() == ObjectID.MUSHROOM) {                                      // wenn der Spieler einen Mushroom berührt
                 if(getBoundsBottom().intersects(tempObject.getBoundsTop())) {
                     if (soundTimer >= 10) {
                         soundPlayer.volume = -30;
                         soundPlayer.play(SoundPlayer.spring);
                         soundTimer = 0;
                     }
-                    speedY = -19;
+                    speedY = -19;                                                               // wird er nach oben geschleudert
                     jumping = true;
 
                     if (facingRight) {
@@ -254,34 +236,13 @@ public class Player extends GameObject {
                 }
             }
 
-            if (tempObject.getId() == ObjectID.PIG) {
-                if (getBoundsBottom().intersects(tempObject.getTotalBounds())) {
-                    if (soundTimer >= 10) {
-                        soundPlayer.volume = -20;
-                        soundPlayer.play(SoundPlayer.bump);
-                        soundTimer = 0;
-                    }
-
-                    speedY = -8;
-                    onEnemy = true;
-                    if (facingRight) {
-                        animationHandler.setAnimation(spinRight);
-                    } else {
-                        animationHandler.setAnimation(spinLeft);
-                    }
-                    animationHandler.setDelay(60);
-                } else if (getBoundsTop().intersects(tempObject.getTotalBounds()) || getBoundsRight().intersects(tempObject.getTotalBounds()) || getBoundsLeft().intersects(tempObject.getTotalBounds())) {
-                    reset();
-                }
-            }
-
-            if (tempObject.getId() == ObjectID.TURTLE) {
+            if (tempObject.getId() == ObjectID.TURTLE) {                                        // bei einer Turtle, stirbt der Spieler direkt
                 if (getTotalBounds().intersects(tempObject.getTotalBounds())) {
                     reset();
                 }
             }
 
-            if (tempObject.getId() == ObjectID.END) {
+            if (tempObject.getId() == ObjectID.END) {                                           // beim Berühren des Endportals, wird das Spiel beendet
                 if (getTotalBounds().intersects(tempObject.getTotalBounds())){
                     Game.endGame();
                 }
@@ -291,18 +252,18 @@ public class Player extends GameObject {
     }
 
     public void input() {                                                           // wandelt die Eingaben des KeyHandlers in Bewegung um
-        if (keyHandler.dPressed) {
+        if (keyHandler.dPressed) {                                                  // Bewegung nach rechts
             speedX = 5;
             facingRight = true;
         }
-        if (keyHandler.aPressed) {
+        if (keyHandler.aPressed) {                                                  // Bewegung nach links
             speedX = -5;
             facingRight = false;
         }
-        if (!(keyHandler.aPressed || keyHandler.dPressed)) {
+        if (!(keyHandler.aPressed || keyHandler.dPressed)) {                        // die Eingaben gleichen sich aus
             speedX = 0;
         }
-        if (keyHandler.spacePressed && !jumping) {
+        if (keyHandler.spacePressed && !jumping) {                                  // springen, nur wenn der Spieler auf dem Boden ist
             if (soundTimer >= 10) {
                 soundPlayer.volume = -25;
                 soundPlayer.play(SoundPlayer.playerJump);
@@ -314,7 +275,7 @@ public class Player extends GameObject {
 
     }
 
-    public void loadSprites() {                                                         // lädt alle Bilder für den Player
+    public void loadSprites() {                                                         // lädt die Bilder mit allen Teilen der Animation und lädt die einzelnen Teile als Subimages in ein Array
         try {
             BufferedImage[] fullImage = new BufferedImage[6];
             fullImage[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/player/player_idleRight.png")));
@@ -336,7 +297,7 @@ public class Player extends GameObject {
             jumpRight[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/player/player_jumpRight.png")));
             jumpLeft[0] = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/de/linkl/Graphics/entity/player/player_jumpLeft.png")));
 
-            for (int i=0; i<11; i++) {
+            for (int i=0; i<11; i++) {                                                              // hier wird das gesamte Bild durchgegangen und die einzelnen Subimages gemacht
                 idleRight[i] = fullImage[0].getSubimage(i*32, 0, 32, 32);
                 idleLeft[i] = fullImage[1].getSubimage(320-i*32, 0, 32, 32);
             }
@@ -353,12 +314,12 @@ public class Player extends GameObject {
         }
     }
 
-    public void reset() {
+    public void reset() {                                                                   // setzt den Spieler auf die Startposition zurück
         soundPlayer.volume = -10;
         soundPlayer.play(SoundPlayer.playerDown);
         x = startX;
         y = startY;
         facingRight = true;
-        DeathHandler.deathcount++;
+        DeathHandler.deathcount++;                                                          // der Deathcounter wird um eins erhöht
     }
 }
