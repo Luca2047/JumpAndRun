@@ -67,7 +67,7 @@ public class Game extends Canvas implements Runnable {
 
         camera = new Camera(0, 0);
         levelLoader = new LevelLoader(objectHandler, backgroundHandler, keyHandler);
-        levelLoader.load("rsc/Level/Level1.txt");
+        levelLoader.load("src/de/linkl/Level/Level1.txt");
 
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
@@ -109,9 +109,10 @@ public class Game extends Canvas implements Runnable {
             while (delta >= 1) {
                 tick();
                 updates++;
-                render();
                 delta--;
             }
+
+            render();
 
             if (System.currentTimeMillis() - timer > 1000) {                                                        // gibt die Updates in der Konsole aus
                 timer += 1000;
